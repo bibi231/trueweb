@@ -55,7 +55,7 @@ export function About() {
             }}
           >
             TrueWeb Solutions was built in Abuja by builders who got tired of slow,
-            overpriced agencies that disappear after launch. We're the team you
+            overpriced agencies that disappear after launch. We&apos;re the team you
             call when deadlines are real and quality is non-negotiable.
           </p>
           <p
@@ -69,6 +69,7 @@ export function About() {
             We build and operate five products ourselves — ReplyAI, HarvestAI,
             SupportAI, NaijaLingo, and NaijaHub — so when we touch your project,
             we bring product-company thinking, not just service delivery.
+
           </p>
           <a
             href="mailto:hello@trueweb.com.ng"

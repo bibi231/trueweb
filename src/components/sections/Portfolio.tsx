@@ -72,7 +72,7 @@ export function Portfolio() {
           <span className="eyebrow">Our work</span>
           <div className="teal-line" style={{ margin: "16px auto" }} />
           <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>
-            Products we've built & launched
+            Products we&apos;ve built &amp; launched
           </h2>
           <p
             style={{

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const NETWORK = [
   { name: "ReplyAI", url: "https://replyai.com.ng", favicon: "https://replyai.com.ng/favicon.ico", color: "#6366f1" },
@@ -19,7 +20,7 @@ function FaviconImg({ url, name, color }: { url: string; name: string; color: st
     );
   }
   return (
-    <img src={url} alt="" width={22} height={22} style={{ borderRadius: 4, objectFit: "contain", flexShrink: 0 }} onError={() => setFailed(true)} />
+    <Image src={url} alt="" width={22} height={22} unoptimized style={{ borderRadius: 4, objectFit: "contain", flexShrink: 0 }} onError={() => setFailed(true)} />
   );
 }
 
