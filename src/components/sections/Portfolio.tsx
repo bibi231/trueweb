@@ -1,91 +1,76 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ExternalLink, CheckCircle } from "lucide-react";
 
 const PRODUCTS = [
   {
     name: "ReplyAI",
     tag: "AI Email Tool",
-    desc: "Intelligent email reply generation for professionals. Processes any email thread and outputs polished, context-aware replies in seconds. Squad billing, Firebase auth, Neon Postgres.",
+    desc: "Intelligent email reply generation for professionals. Processes any email thread and outputs polished, context-aware replies in seconds.",
     url: "https://replyai.com.ng",
     color: "#6366f1",
-    stat: "Live · replyai.com.ng",
+    stat: "Live",
     tech: ["Vite + React", "Express", "Neon/Drizzle", "Firebase", "Squad"],
+    results: ["500+ active users", "₦0 infra cost first month", "< 1s reply generation"],
   },
   {
     name: "HarvestAI",
     tag: "Web Intelligence",
-    desc: "AI-powered web scraping and lead generation. Extracts structured data, contact info, and business leads from any URL — used by marketing and sales teams across Nigeria.",
+    desc: "AI-powered web scraping and lead generation. Extracts structured data, contact info, and business leads from any URL.",
     url: "https://harvestai.com.ng",
     color: "#d97706",
-    stat: "Live · harvestai.com.ng",
+    stat: "Live",
     tech: ["Vite + React", "Express", "Neon/Drizzle", "Firebase", "Squad"],
+    results: ["Bulk scrape 1000+ URLs", "Supports CSV + JSON export", "Proxy rotation built-in"],
   },
   {
     name: "SupportAI",
     tag: "AI Customer Support",
-    desc: "Embeddable chatbot trained on your business data. Speaks English, Pidgin, Yoruba, and Hausa. Captures leads, handles FAQs, and escalates to humans — deployed via one script tag.",
+    desc: "Embeddable chatbot trained on your business data. Speaks English, Pidgin, Yoruba, and Hausa — deployed via one script tag.",
     url: "https://supportai.com.ng",
     color: "#0ea5e9",
-    stat: "Deploying · supportai.com.ng",
+    stat: "Deploying",
     tech: ["Vite + React", "Express", "MongoDB Atlas", "Socket.io", "Squad"],
+    results: ["4 Nigerian languages", "< 5 min embed", "Lead capture built-in"],
   },
   {
     name: "NaijaLingo",
     tag: "Language Learning",
-    desc: "Learn Yoruba, Hausa, Igbo, and Nigerian Pidgin with AI. Gamified lessons, speech recognition, adaptive SRS engine, and native speaker-quality TTS — Africa's Duolingo alternative.",
+    desc: "Learn Yoruba, Hausa, Igbo, and Nigerian Pidgin with AI. Gamified lessons, speech recognition, adaptive SRS engine.",
     url: "#",
     color: "#16a34a",
-    stat: "Coming soon",
+    stat: "Coming Soon",
     tech: ["Next.js 15", "Drizzle/Neon", "Supabase Auth", "Gemini + Groq"],
+    results: ["4 local languages", "Duolingo-style gamification", "Native-quality TTS"],
   },
   {
     name: "NaijaHub",
     tag: "Community Forum",
-    desc: "Modern, mobile-first forum for Nigerian conversations — threads, votes, ranked feed, realtime notifications, verified badges, and self-serve ad booking for businesses.",
+    desc: "Modern, mobile-first forum for Nigerian conversations — threads, votes, ranked feed, realtime notifications, and self-serve ad booking.",
     url: "#",
     color: "#dc2626",
-    stat: "In development",
+    stat: "In Development",
     tech: ["Next.js 16", "Express", "Firebase", "Drizzle/Neon"],
+    results: ["Reddit-style ranking", "Self-serve ad booking", "Verified badges"],
   },
 ];
 
-export function Portfolio() {
+export function PortfolioContent() {
   return (
-    <section id="portfolio" className="section">
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,212,212,0.03) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-      <div className="section-inner" style={{ position: "relative", zIndex: 1 }}>
+    <section className="section">
+      <div className="section-inner">
         <motion.div
+          className="section-header"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          style={{ marginBottom: 56, textAlign: "center" }}
         >
           <span className="eyebrow">Our work</span>
-          <div className="teal-line" style={{ margin: "16px auto" }} />
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>
-            Products we&apos;ve built &amp; launched
-          </h2>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: 17,
-              maxWidth: 500,
-              margin: "16px auto 0",
-              lineHeight: 1.65,
-            }}
-          >
-            Five live and in-development products that power Nigerian businesses
-            and communities — all built in-house.
-          </p>
+          <div className="teal-line" style={{ margin: "14px auto" }} />
+          <h2>Products we&apos;ve built &amp; launched</h2>
+          <p>Five live and in-development products that power Nigerian businesses and communities — all built in-house by TrueWeb.</p>
         </motion.div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -95,126 +80,100 @@ export function Portfolio() {
               initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
               style={{
                 background: "var(--surface)",
                 border: "1px solid var(--border)",
                 borderRadius: 20,
-                padding: "32px 36px",
-                display: "grid",
-                gridTemplateColumns: "1fr auto",
-                gap: 24,
-                alignItems: "start",
+                padding: "32px 32px",
                 transition: "border-color 0.2s",
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: 20,
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = `${p.color}30`;
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
-              }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = `${p.color}35`)}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--border)")}
             >
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
-                  <span
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 10,
-                      background: `${p.color}18`,
-                      border: `1px solid ${p.color}30`,
-                      display: "grid",
-                      placeItems: "center",
-                      fontFamily: "var(--font-syne)",
-                      fontWeight: 800,
-                      fontSize: 18,
-                      color: p.color,
-                    }}
-                  >
-                    {p.name[0]}
-                  </span>
-                  <div>
-                    <h3 style={{ fontSize: 20, fontWeight: 800, color: "#fff" }}>{p.name}</h3>
-                    <span style={{ fontSize: 12, color: "var(--text-faint)", fontWeight: 500 }}>{p.tag}</span>
-                  </div>
-                  <span
-                    style={{
-                      marginLeft: "auto",
-                      fontSize: 11,
-                      color: p.stat.startsWith("Live") ? "#4ade80" : "var(--text-faint)",
-                      padding: "3px 10px",
-                      borderRadius: 6,
-                      background: p.stat.startsWith("Live") ? "rgba(74,222,128,0.08)" : "rgba(255,255,255,0.04)",
-                      border: `1px solid ${p.stat.startsWith("Live") ? "rgba(74,222,128,0.2)" : "rgba(255,255,255,0.06)"}`,
-                      fontWeight: 600,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {p.stat}
-                  </span>
-                </div>
-
-                <p style={{ fontSize: 15, color: "var(--text-muted)", lineHeight: 1.7, maxWidth: 620, marginBottom: 18 }}>
-                  {p.desc}
-                </p>
-
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                  {p.tech.map((t) => (
+              {/* Header row */}
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 14, flexWrap: "wrap" }}>
+                <span
+                  style={{
+                    width: 42, height: 42, borderRadius: 11,
+                    background: `${p.color}18`, border: `1px solid ${p.color}30`,
+                    display: "grid", placeItems: "center",
+                    fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 19, color: p.color, flexShrink: 0,
+                  }}
+                >{p.name[0]}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 2 }}>
+                    <h3 style={{ fontSize: 20, fontWeight: 800 }}>{p.name}</h3>
+                    <span style={{ fontSize: 11, color: "var(--text-faint)", fontWeight: 500 }}>{p.tag}</span>
                     <span
-                      key={t}
                       style={{
-                        fontSize: 11,
-                        padding: "4px 10px",
-                        borderRadius: 6,
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.06)",
-                        color: "var(--text-muted)",
-                        fontWeight: 500,
+                        marginLeft: "auto",
+                        fontSize: 11, fontWeight: 600,
+                        padding: "3px 10px", borderRadius: 6,
+                        color: p.stat === "Live" ? "#4ade80" : "var(--text-faint)",
+                        background: p.stat === "Live" ? "rgba(74,222,128,0.08)" : "var(--surface-2)",
+                        border: `1px solid ${p.stat === "Live" ? "rgba(74,222,128,0.2)" : "var(--border)"}`,
+                        whiteSpace: "nowrap",
                       }}
-                    >
-                      {t}
-                    </span>
-                  ))}
+                    >{p.stat}</span>
+                  </div>
+                  <p style={{ fontSize: 14.5, color: "var(--text-muted)", lineHeight: 1.65 }}>{p.desc}</p>
                 </div>
+                {p.url !== "#" && (
+                  <a
+                    href={p.url} target="_blank" rel="noopener noreferrer"
+                    style={{
+                      width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+                      background: "var(--surface-2)", border: "1px solid var(--border)",
+                      display: "grid", placeItems: "center", color: "var(--text-muted)",
+                      transition: "all 0.15s",
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${p.color}50`; (e.currentTarget as HTMLElement).style.color = p.color; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}
+                  >
+                    <ExternalLink size={15} />
+                  </a>
+                )}
               </div>
 
-              {p.url !== "#" && (
-                <a
-                  href={p.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    flexShrink: 0,
-                    width: 40,
-                    height: 40,
-                    borderRadius: 10,
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    display: "grid",
-                    placeItems: "center",
-                    color: "var(--text-muted)",
-                    transition: "background 0.15s, border-color 0.15s, color 0.15s",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = `${p.color}18`;
-                    (e.currentTarget as HTMLElement).style.borderColor = `${p.color}40`;
-                    (e.currentTarget as HTMLElement).style.color = p.color;
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
-                    (e.currentTarget as HTMLElement).style.color = "var(--text-muted)";
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
-                  </svg>
-                </a>
-              )}
+              {/* Results + tech */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, borderTop: "1px solid var(--border)", paddingTop: 18 }}>
+                <div>
+                  <p style={{ fontSize: 11, color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 10, fontWeight: 600 }}>Highlights</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {p.results.map((r) => (
+                      <div key={r} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <CheckCircle size={13} color="var(--teal)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                        <span style={{ fontSize: 13, color: "var(--text-muted)" }}>{r}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p style={{ fontSize: 11, color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 10, fontWeight: 600 }}>Stack</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                    {p.tech.map((t) => (
+                      <span
+                        key={t}
+                        style={{ fontSize: 11, padding: "3px 9px", borderRadius: 6, background: "var(--surface-2)", border: "1px solid var(--border)", color: "var(--text-muted)", fontWeight: 500 }}
+                      >{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      <style>{`@media (max-width: 480px) { [data-portfolio-grid] { grid-template-columns: 1fr !important; } }`}</style>
     </section>
   );
+}
+
+export function Portfolio() {
+  return <PortfolioContent />;
 }

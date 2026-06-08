@@ -1,73 +1,109 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { ArrowRight, ChevronDown } from "lucide-react";
+
+const ShaderLines = dynamic(() => import("@/components/ui/ShaderLines").then((m) => m.ShaderLines), {
+  ssr: false,
+  loading: () => null,
+});
+
+const Hero3D = dynamic(() => import("./Hero3D").then((m) => m.Scene), {
+  ssr: false,
+  loading: () => null,
+});
+
+const HEADLINE_WORDS = ["We", "build", "fast,", "beautiful", "digital", "products."];
 
 const PRODUCTS = [
   { name: "ReplyAI", url: "https://replyai.com.ng", tag: "AI Email" },
-  { name: "HarvestAI", url: "https://harvestai.com.ng", tag: "Web Intelligence" },
-  { name: "SupportAI", url: "https://supportai.com.ng", tag: "Customer Support" },
-  { name: "NaijaLingo", url: "#", tag: "Language Learning" },
+  { name: "HarvestAI", url: "https://harvestai.com.ng", tag: "Web Intel" },
+  { name: "SupportAI", url: "https://supportai.com.ng", tag: "AI Support" },
+  { name: "NaijaLingo", url: "#", tag: "Language" },
   { name: "NaijaHub", url: "#", tag: "Community" },
 ];
 
+const word = {
+  hidden: { opacity: 0, y: 32 },
+  show: (i: number) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  }),
+};
+
 export function Hero() {
+  const [reduce, setReduce] = useState(false);
+  const [show3D, setShow3D] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  /* Animated particle grid */
   useEffect(() => {
+    setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const t = setTimeout(() => setShow3D(true), 800);
+    return () => clearTimeout(t);
+  }, []);
+
+  /* Ambient particle canvas (instant, lightweight) */
+  useEffect(() => {
+    if (reduce) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
     let raf: number;
     let t = 0;
-
     const resize = () => {
-      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      canvas.width = canvas.offsetWidth * Math.min(window.devicePixelRatio, 1.5);
+      canvas.height = canvas.offsetHeight * Math.min(window.devicePixelRatio, 1.5);
+      ctx.scale(canvas.width / canvas.offsetWidth, canvas.height / canvas.offsetHeight);
     };
     resize();
     window.addEventListener("resize", resize);
-
     const draw = () => {
-      const w = canvas.offsetWidth;
-      const h = canvas.offsetHeight;
+      const w = canvas.offsetWidth, h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
-
-      const cols = Math.ceil(w / 60);
-      const rows = Math.ceil(h / 60);
-
-      for (let i = 0; i <= cols; i++) {
-        for (let j = 0; j <= rows; j++) {
-          const x = (i / cols) * w;
-          const y = (j / rows) * h;
-          const wave = Math.sin(t * 0.8 + i * 0.4 + j * 0.3) * 0.5 + 0.5;
-          const alpha = wave * 0.12;
+      for (let i = 0; i <= 18; i++) {
+        for (let j = 0; j <= 10; j++) {
+          const x = (i / 18) * w, y = (j / 10) * h;
+          const a = (Math.sin(t + i * 0.45 + j * 0.3) * 0.5 + 0.5) * 0.09;
           ctx.beginPath();
-          ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(0, 212, 212, ${alpha})`;
+          ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0,212,212,${a})`;
           ctx.fill();
         }
       }
-      t += 0.016;
+      t += 0.014;
       raf = requestAnimationFrame(draw);
     };
     draw();
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
+  }, [reduce]);
 
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
+  /* Mouse parallax */
+  const heroRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (reduce) return;
+    const el = heroRef.current;
+    if (!el) return;
+    const handler = (e: MouseEvent) => {
+      const { left, top, width, height } = el.getBoundingClientRect();
+      const x = ((e.clientX - left) / width - 0.5) * 20;
+      const y = ((e.clientY - top) / height - 0.5) * 12;
+      el.style.setProperty("--px", `${x}px`);
+      el.style.setProperty("--py", `${y}px`);
     };
-  }, []);
+    el.addEventListener("mousemove", handler);
+    return () => el.removeEventListener("mousemove", handler);
+  }, [reduce]);
 
   return (
     <section
+      ref={heroRef}
       style={{
         position: "relative",
-        minHeight: "100vh",
+        minHeight: "100svh",
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
@@ -75,108 +111,108 @@ export function Hero() {
         paddingTop: 68,
       }}
     >
-      {/* Animated mesh */}
-      <div className="mesh-gradient noise" />
+      {/* Shader lines (primary GPU animation) */}
+      {!reduce && (
+        <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.25 }}>
+          <ShaderLines />
+        </div>
+      )}
 
-      {/* Particle canvas */}
+      {/* Ambient layers */}
+      <div
+        className="mesh-gradient"
+        style={{
+          transform: reduce ? "none" : "translate(calc(var(--px, 0px) * 0.3), calc(var(--py, 0px) * 0.3))",
+          transition: "transform 0.1s ease-out",
+        }}
+      />
+      <div className="aurora"><div className="aurora-1" /></div>
+      <div className="aurora"><div className="aurora-2" /></div>
+
+      {/* Particle canvas (instant) */}
       <canvas
         ref={canvasRef}
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          opacity: 0.6,
-          pointerEvents: "none",
-        }}
+        aria-hidden
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.5, pointerEvents: "none" }}
       />
 
-      {/* Teal bottom fade */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 200,
-          background: "linear-gradient(to top, var(--bg), transparent)",
-          pointerEvents: "none",
-        }}
-      />
+      {/* 3D scene (deferred) */}
+      {show3D && !reduce && (
+        <div style={{ position: "absolute", inset: 0, opacity: 0.45, zIndex: 0, transition: "opacity 1s" }}>
+          <Hero3D />
+        </div>
+      )}
 
-      <div className="section-inner" style={{ position: "relative", zIndex: 1, paddingTop: 80, paddingBottom: 80 }}>
-        <div style={{ maxWidth: 760 }}>
+      {/* Bottom fade */}
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 200, background: "linear-gradient(to top, var(--bg), transparent)", pointerEvents: "none", zIndex: 2 }} />
+
+      {/* Content */}
+      <div className="section-inner" style={{ position: "relative", zIndex: 3, paddingTop: 80, paddingBottom: 80 }}>
+        <div style={{ maxWidth: 780 }}>
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="eyebrow">Web Design & Development · Nigeria</span>
+            <span className="eyebrow">Web Design &amp; Development &middot; Nigeria</span>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <h1
             style={{
-              fontSize: "clamp(42px, 6vw, 76px)",
-              lineHeight: 1.05,
+              fontSize: "clamp(42px, 6.5vw, 80px)",
+              lineHeight: 1.02,
               marginTop: 20,
               marginBottom: 24,
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0 12px",
             }}
           >
-            We build{" "}
-            <span className="gradient-text">fast, beautiful</span>
-            <br />
-            digital products.
-          </motion.h1>
+            {HEADLINE_WORDS.map((w, i) => (
+              <motion.span
+                key={w + i}
+                custom={i}
+                variants={word}
+                initial="hidden"
+                animate="show"
+                style={{ display: "inline-block" }}
+                className={w === "fast," || w === "beautiful" ? "gradient-text" : ""}
+              >
+                {w}
+              </motion.span>
+            ))}
+          </h1>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            style={{
-              fontSize: 18,
-              lineHeight: 1.65,
-              color: "var(--text-muted)",
-              maxWidth: 560,
-              marginBottom: 40,
-            }}
+            transition={{ duration: 0.5, delay: 0.55 }}
+            style={{ fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "var(--text-muted)", maxWidth: 560, marginBottom: 40 }}
           >
-            TrueWeb Solutions crafts websites, SaaS platforms, and AI-powered
-            tools for Nigerian businesses that need to move fast and stand out.
+            TrueWeb Solutions crafts websites, SaaS platforms, and AI-powered tools for Nigerian businesses that need to move fast and stand out.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            style={{ display: "flex", gap: 14, flexWrap: "wrap" }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+            style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
           >
-            <a href="#build" className="btn-teal">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+            <Link href="/start" className="btn-teal">
+              <ArrowRight size={16} />
               Start a Project
-            </a>
-            <a href="#portfolio" className="btn-ghost">See our work</a>
+            </Link>
+            <Link href="/work" className="btn-ghost">See our work</Link>
           </motion.div>
 
-          {/* Product chips */}
+          {/* TrueWeb Network chips */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            style={{
-              marginTop: 64,
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
-            }}
+            transition={{ duration: 0.6, delay: 1.0 }}
+            style={{ marginTop: 64, display: "flex", flexDirection: "column", gap: 12 }}
           >
-            <p
-              style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-faint)" }}
-            >
+            <p style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-faint)" }}>
               Products in the TrueWeb Network
             </p>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -184,46 +220,46 @@ export function Hero() {
                 <a
                   key={p.name}
                   href={p.url}
-                  target="_blank"
+                  target={p.url === "#" ? undefined : "_blank"}
                   rel="noopener noreferrer"
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                    padding: "6px 12px",
-                    borderRadius: 8,
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    background: "rgba(255,255,255,0.03)",
-                    fontSize: 12,
-                    color: "var(--text-muted)",
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                    padding: "6px 12px", borderRadius: 8,
+                    border: "1px solid var(--border)",
+                    background: "rgba(255,255,255,0.02)",
+                    fontSize: 12, color: "var(--text-muted)",
                     transition: "border-color 0.15s, color 0.15s",
                   }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,212,0.3)";
-                    (e.currentTarget as HTMLElement).style.color = "#fff";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)";
-                    (e.currentTarget as HTMLElement).style.color = "var(--text-muted)";
-                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,212,0.3)"; (e.currentTarget as HTMLElement).style.color = "var(--text)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}
                 >
-                  <span
-                    style={{
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      background: "var(--teal)",
-                      opacity: 0.7,
-                    }}
-                  />
+                  <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--teal)", opacity: 0.7, flexShrink: 0 }} />
                   {p.name}
-                  <span style={{ color: "var(--text-faint)", fontSize: 11 }}>— {p.tag}</span>
+                  <span style={{ color: "var(--text-faint)", fontSize: 10 }}>— {p.tag}</span>
                 </a>
               ))}
             </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        style={{
+          position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+          color: "var(--text-faint)", fontSize: 11, letterSpacing: "0.1em",
+          zIndex: 4, pointerEvents: "none",
+        }}
+      >
+        <span>SCROLL</span>
+        <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>
+          <ChevronDown size={16} />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
