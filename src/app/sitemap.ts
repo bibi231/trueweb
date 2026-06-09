@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 const BASE = "https://trueweb.com.ng";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["/", "/services", "/work", "/process", "/pricing", "/about", "/contact", "/start"];
+  const routes = ["/", "/services", "/work", "/process", "/pricing", "/about", "/contact", "/start", "/founder", "/testimonials"];
   return routes.map((route) => ({
     url: `${BASE}${route}`,
     lastModified: new Date(),

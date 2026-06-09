@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Zap, Globe, Shield } from "lucide-react";
 
@@ -17,9 +18,50 @@ const VALUES = [
   { Icon: MapPin, title: "Built here", desc: "Based in Abuja. We understand the market because we operate in it." },
 ];
 
-export function AboutContent() {
+function FounderPortraitHover() {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <a href="/founder" style={{ display: "block", borderRadius: 18, overflow: "hidden", position: "relative", flexShrink: 0, aspectRatio: "3/4", background: "var(--surface)" }}
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocus={() => setHovered(true)} onBlur={() => setHovered(false)}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/founder/Bitrus_white_agbada.jpg" alt="Bitrus J-K Gadzama, founder TrueWeb Solutions" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity 0.5s", position: "absolute", inset: 0, opacity: hovered ? 0 : 1, borderRadius: 18 }} />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/founder/Bitrus_bw_durag.jpg" alt="Bitrus Gadzama" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", borderRadius: 18, opacity: hovered ? 1 : 0, transition: "opacity 0.5s" }} />
+    </a>
+  );
+}
+
+export function AboutContent({ showFaq: _showFaq }: { showFaq?: boolean }) {
   return (
     <>
+      {/* Founder teaser — above main about copy */}
+      <section className="section" style={{ paddingBottom: 0 }}>
+        <div className="section-inner">
+          <div style={{ display: "grid", gridTemplateColumns: "260px 1fr", gap: 48, alignItems: "center", marginBottom: 0 }} className="tw-founder-teaser">
+            <FounderPortraitHover />
+            <div>
+              <span className="eyebrow">Meet the founder</span>
+              <div className="teal-line" />
+              <h2 style={{ fontSize: "clamp(24px, 3.5vw, 36px)", marginBottom: 14 }}>Bitrus J-K Gadzama</h2>
+              <p style={{ fontSize: 16, color: "var(--text-muted)", lineHeight: 1.7, marginBottom: 20 }}>
+                Software engineer and product builder based in Abuja. Founded TrueWeb Solutions and built ReplyAI, HarvestAI, and SupportAI — products designed specifically for the Nigerian market.
+              </p>
+              <a href="/founder" className="btn-ghost" style={{ fontSize: 14, display: "inline-flex", alignItems: "center", gap: 6 }}>
+                Read the founder&apos;s story
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <style>{`
+          .founder-hover-wrap:hover .founder-img-primary,
+          .founder-hover-wrap:focus .founder-img-primary { opacity: 0 !important; }
+          .founder-hover-wrap:hover .founder-img-hover,
+          .founder-hover-wrap:focus .founder-img-hover { opacity: 1 !important; }
+          @media (max-width: 640px) { .tw-founder-teaser { grid-template-columns: 1fr !important; } .tw-founder-teaser > a { max-width: 200px; } }
+        `}</style>
+      </section>
+
       <section className="section">
         <div className="section-inner">
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }} className="tw-about-grid">

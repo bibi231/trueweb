@@ -90,6 +90,19 @@ export const newsletter = pgTable("newsletter_subscribers", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const reviews = pgTable("reviews", {
+  id: serial("id").primaryKey(),
+  projectId: integer("project_id").references(() => projects.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  rating: integer("rating").notNull(),
+  quote: text("quote").notNull(),
+  authorName: text("author_name").notNull(),
+  authorRole: text("author_role"),
+  approved: boolean("approved").default(false),
+  featured: boolean("featured").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const leads = pgTable("leads", {
   id: serial("id").primaryKey(),
   name: text("name"),
