@@ -3,6 +3,7 @@ import { Inter, Syne } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { SmoothScrollProvider } from "@/components/ui/SmoothScrollProvider";
+import { CookieBanner } from "@/components/ui/CookieBanner";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </SmoothScrollProvider>
         </ThemeProvider>
         <Analytics />
+        <CookieBanner />
       </body>
     </html>
   );

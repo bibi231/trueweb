@@ -6,6 +6,7 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   emailVerified: timestamp("email_verified"),
   image: text("image"),
+  /* owner | staff | client */
   role: text("role").default("client"),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -93,11 +94,13 @@ export const newsletter = pgTable("newsletter_subscribers", {
 export const reviews = pgTable("reviews", {
   id: serial("id").primaryKey(),
   projectId: integer("project_id").references(() => projects.id),
-  userId: text("user_id").notNull().references(() => users.id),
+  userId: text("user_id").references(() => users.id),
+  authorEmail: text("author_email"),
   rating: integer("rating").notNull(),
   quote: text("quote").notNull(),
   authorName: text("author_name").notNull(),
   authorRole: text("author_role"),
+  source: text("source").default("portal"),
   approved: boolean("approved").default(false),
   featured: boolean("featured").default(false),
   createdAt: timestamp("created_at").defaultNow(),

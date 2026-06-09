@@ -77,13 +77,18 @@ export function Footer() {
               Web design & development agency. Fast, beautiful digital products built in Nigeria for the world.
             </p>
             <div style={{ display: "flex", gap: 6 }}>
-              {["X", "Li", "IG"].map((s) => (
-                <a key={s} href="https://twitter.com/truewebhq" target="_blank" rel="noopener noreferrer"
+              {/* Socials — update hrefs when handles confirmed */}
+              {[
+                { label: "X/Twitter", href: "https://twitter.com/truewebhq", icon: "𝕏" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/bitrus-joe-kyari-gadzama-076093178/", icon: "in" },
+                { label: "GitHub", href: "https://github.com/bibi231", icon: "GH" },
+              ].map((s) => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
                   style={{ width: 32, height: 32, borderRadius: 8, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", display: "grid", placeItems: "center", color: "#9aa1b3", fontSize: 11, fontWeight: 700, textDecoration: "none", transition: "all 0.15s" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#fff"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,212,0.3)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#9aa1b3"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)"; }}
                 >
-                  {s}
+                  {s.icon}
                 </a>
               ))}
             </div>
@@ -93,8 +98,8 @@ export function Footer() {
           <div>
             <h4 style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#fff", marginBottom: 16 }}>Services</h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
-              {["Web Design", "SaaS Development", "AI Integration", "E-Commerce", "SEO"].map((l) => (
-                <li key={l}><a href="#services" style={{ fontSize: 13.5, color: "#8892a4", textDecoration: "none", transition: "color 0.15s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")} onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8892a4")}>{l}</a></li>
+              {[{ label: "Web Design", href: "/services" }, { label: "SaaS Development", href: "/services" }, { label: "AI Integration", href: "/services" }, { label: "E-Commerce", href: "/services" }, { label: "SEO & Performance", href: "/services" }].map((l) => (
+                <li key={l.label}><Link href={l.href} style={{ fontSize: 13.5, color: "#8892a4", textDecoration: "none", transition: "color 0.15s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")} onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8892a4")}>{l.label}</Link></li>
               ))}
             </ul>
           </div>
@@ -103,8 +108,8 @@ export function Footer() {
           <div>
             <h4 style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#fff", marginBottom: 16 }}>Company</h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
-              {[{ label: "About", href: "#about" }, { label: "Work", href: "#portfolio" }, { label: "Pricing", href: "#pricing" }, { label: "Contact", href: "#contact" }, { label: "Client Portal", href: "/portal" }].map((l) => (
-                <li key={l.label}><a href={l.href} style={{ fontSize: 13.5, color: "#8892a4", textDecoration: "none", transition: "color 0.15s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")} onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8892a4")}>{l.label}</a></li>
+              {[{ label: "About", href: "/about" }, { label: "Our Work", href: "/work" }, { label: "Pricing", href: "/pricing" }, { label: "Founder", href: "/founder" }, { label: "Reviews", href: "/testimonials" }, { label: "Contact", href: "/contact" }, { label: "Client Portal", href: "/portal" }].map((l) => (
+                <li key={l.label}><Link href={l.href} style={{ fontSize: 13.5, color: "#8892a4", textDecoration: "none", transition: "color 0.15s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")} onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8892a4")}>{l.label}</Link></li>
               ))}
             </ul>
           </div>

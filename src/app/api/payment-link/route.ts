@@ -14,8 +14,8 @@ const Schema = z.object({
 export async function POST(req: Request) {
   try {
     const session = await auth();
-    /* Only admin (trueweb team) can generate payment links */
-    if (!session?.user || (session.user as { role?: string }).role !== "admin") {
+    const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com"];
+    if (!session?.user?.email || !OWNER_EMAILS.includes(session.user.email)) {
       return NextResponse.json({ error: "FORBIDDEN" }, { status: 403 });
     }
 
