@@ -320,3 +320,25 @@ h1, h2, h3, h4, h5 {
 @media (max-width: 480px) {
   .section-inner { padding: 0 14px; }
 }
+
+/* ─── Logo theming ─────────────────────────────────────────── */
+/* Footer wordmark stays white on dark footer (footer bg is always dark) */
+.tw-footer-wordmark {
+  background: linear-gradient(135deg, #fff 0%, #cdd2dc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Navbar T badge: dark mode = teal bg + dark T; light mode = dark bg + teal T */
+.tw-logo-badge {
+  background: linear-gradient(135deg, var(--teal), var(--teal-dim));
+  color: #050507;
+  box-shadow: 0 0 22px rgba(0, 212, 212, 0.28);
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+[data-theme="light"] .tw-logo-badge {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: var(--teal);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+}

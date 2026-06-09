@@ -71,7 +71,7 @@ export function Footer() {
           <div>
             <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none", marginBottom: 14 }}>
               <span style={{ width: 32, height: 32, borderRadius: 9, background: "linear-gradient(135deg, #00d4d4, #00a8a8)", display: "grid", placeItems: "center", fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 17, color: "#050507", boxShadow: "0 4px 14px rgba(0,212,212,0.3)" }}>T</span>
-              <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 21, letterSpacing: "-0.02em", background: "linear-gradient(135deg, #fff 0%, #cdd2dc 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>TrueWeb</span>
+              <span className="tw-footer-wordmark" style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 21, letterSpacing: "-0.02em" }}>TrueWeb</span>
             </Link>
             <p style={{ fontSize: 13.5, lineHeight: 1.65, color: "#8892a4", maxWidth: 280, marginBottom: 18 }}>
               Web design & development agency. Fast, beautiful digital products built in Nigeria for the world.
@@ -199,3 +199,4 @@ export function Footer() {
     </footer>
   );
 }
+                                                                                                           

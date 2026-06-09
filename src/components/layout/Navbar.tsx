@@ -59,6 +59,7 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
             <span
+              className="tw-logo-badge"
               style={{
                 width: 34, height: 34, borderRadius: 10,
                 background: "linear-gradient(135deg, var(--teal), var(--teal-dim))",
@@ -190,8 +191,4 @@ export function Navbar() {
           .tw-portal-link { display: none !important; }
           .tw-hamburger { display: block !important; }
         }
-        @media (min-width: 769px) { .tw-mobile-nav { display: none !important; } }
-      `}</style>
-    </>
-  );
-}
+        @media (min-width: 769px) { .tw-mobile-nav { display: none !importa
