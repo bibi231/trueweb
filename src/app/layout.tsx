@@ -37,16 +37,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${process.env.NEXT_PUBLIC_GA4_ID}');` }} />
           </>
         )}
-      </head>
-      <body>
-        <ThemeProvider>
-          <SmoothScrollProvider>
-            {children}
-          </SmoothScrollProvider>
-        </ThemeProvider>
-        <Analytics />
-        <CookieBanner />
-      </body>
-    </html>
-  );
-}
+        {/* Google AdSense */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7798519284162823" crossOrigin="anonymous" />
+        <meta name="google-adsense-account" content="ca-pub-779851

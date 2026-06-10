@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import Link from "next/link";
 import { signOut } from "@/lib/auth";
 import { LayoutDashboard, MessageSquare, FolderOpen, Receipt, LogOut } from "lucide-react";
@@ -14,8 +15,18 @@ const NAV = [
 ];
 
 export default async function PortalLayout({ children }: { children: React.ReactNode }) {
+  // Don't gate the login page itself — would cause an infinite redirect loop.
+  const hdrs = await headers();
+  const pathname = hdrs.get("x-pathname") ?? hdrs.get("x-invoke-path") ?? hdrs.get("next-url") ?? "";
+  const isLoginRoute = pathname.includes("/portal/login");
+
   const session = await auth();
-  if (!session?.user) redirect("/portal/login");
+  if (!session?.user && !isLoginRoute) redirect("/portal/login");
+
+  // Render the login page without the sidebar chrome.
+  if (isLoginRoute || !session?.user) {
+    return <>{children}</>;
+  }
 
   return (
     <div style={{ display: "flex", minHeight: "100svh", background: "var(--bg)" }}>
@@ -73,18 +84,4 @@ export default async function PortalLayout({ children }: { children: React.React
               await signOut({ redirectTo: "/" });
             }}
           >
-            <button type="submit" style={{ display: "flex", alignItems: "center", gap: 10, width: "100%", padding: "10px 12px", borderRadius: 9, background: "none", border: "none", cursor: "pointer", fontSize: 13.5, color: "var(--text-faint)", fontFamily: "inherit", transition: "color 0.15s" }}>
-              <LogOut size={15} strokeWidth={1.8} />
-              Sign out
-            </button>
-          </form>
-        </div>
-      </aside>
-
-      {/* Main */}
-      <main style={{ flex: 1, overflow: "auto", padding: "32px 36px" }}>
-        {children}
-      </main>
-    </div>
-  );
-}
+            <button type="submit" style={{ display: "flex", alignItems: "center", gap: 10, width: "100%", padding: "10px 12px",
