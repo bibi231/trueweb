@@ -88,6 +88,7 @@ export const newsletter = pgTable("newsletter_subscribers", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
   source: text("source").default("unknown"),
+  unsubscribed: boolean("unsubscribed").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

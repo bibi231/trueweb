@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { db } from "@/lib/db";
+import { leads } from "@/lib/db/schema";
 
 const LeadSchema = z.object({
   name: z.string().min(1).max(100),
@@ -13,6 +15,8 @@ const LeadSchema = z.object({
   source: z.string().max(64).optional(),
 });
 
+const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com"];
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -23,33 +27,42 @@ export async function POST(req: Request) {
 
     const lead = data.data;
 
-    const resendKey = process.env.RESEND_API_KEY;
-    if (resendKey) {
-      const text = [
-        `Name: ${lead.name}`,
-        `Email: ${lead.email}`,
-        `Site type: ${lead.siteType || "—"}`,
-        `Pages: ${lead.pages?.join(", ") || "—"}`,
-        `Features: ${lead.features?.join(", ") || "—"}`,
-        `Budget: ${lead.budget || "—"}`,
-        `Timeline: ${lead.timeline || "—"}`,
-        `Idea: ${lead.idea || "—"}`,
-      ].join("\n");
-
-      await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "TrueWeb Leads <noreply@trueweb.com.ng>",
-          to: ["hello@trueweb.com.ng"],
-          subject: `New project brief from ${lead.name} — ${lead.siteType || "Website"}`,
-          text,
-          reply_to: lead.email,
-        }),
+    // Save to DB
+    try {
+      await db.insert(leads).values({
+        name: lead.name,
+        email: lead.email,
+        siteType: lead.siteType,
+        budget: lead.budget,
+        timeline: lead.timeline,
+        features: lead.features?.join(", "),
+        idea: lead.idea,
+        source: lead.source ?? "build-flow",
+        status: "new",
       });
+    } catch (dbErr) {
+      console.error("[leads] db insert failed:", dbErr);
+    }
+
+    // Email owner notification
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const { sendLeadNotification } = await import("@/lib/email/send");
+        await Promise.all(
+          OWNER_EMAILS.map((ownerEmail) =>
+            sendLeadNotification(ownerEmail, {
+              name: lead.name,
+              email: lead.email,
+              siteType: lead.siteType,
+              budget: lead.budget,
+              timeline: lead.timeline,
+              idea: lead.idea,
+            })
+          )
+        );
+      } catch (emailErr) {
+        console.error("[leads] email failed:", emailErr);
+      }
     }
 
     return NextResponse.json({ ok: true });
