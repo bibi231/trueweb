@@ -1,0 +1,41 @@
+# TrueWeb Solutions
+
+> Nigerian web design, development, and SaaS agency. We build fast, production-ready websites and AI-powered software products.
+
+TrueWeb Solutions is a Nigerian software agency that builds websites and SaaS products for businesses across Nigeria and Africa. We ship in 7 weeks or less.
+
+## Services
+
+- **Web design & development**: Custom websites for businesses, startups, and enterprises
+- **SaaS development**: Full-stack SaaS products built and deployed to production
+- **AI product development**: AI-powered tools and automations integrated into existing products
+- **E-commerce**: Shopify alternatives, custom storefronts, payment integration (Squad, Paystack, Monnify)
+
+## Our SaaS portfolio
+
+We have built and operate 3 AI-powered SaaS products:
+
+- **ReplyAI** (https://replyai.com.ng) — AI email reply generator and meeting notes tool. Supports English, Pidgin, Yoruba, Hausa, French.
+- **HarvestAI** (https://harvestai.com.ng) — AI web scraping, lead generation, and B2B data extraction tool.
+- **SupportAI** (https://supportai.com.ng) — No-code AI customer support chatbot builder with multilingual support for Nigerian languages.
+
+## Process
+
+7-week delivery process: Discovery → Design → Development → Testing → Launch → Support.
+
+## Pricing
+
+Website projects from ₦250,000. SaaS products from ₦1,500,000. Custom quote available.
+
+## Location
+
+Nigeria (remote-first, serving clients nationwide and internationally).
+
+## Links
+
+- Homepage: https://trueweb.com.ng
+- Blog: https://trueweb.com.ng/blog
+- Services: https://trueweb.com.ng/services
+- Portfolio: https://trueweb.com.ng/work
+- Start a project: https://trueweb.com.ng/start
+- Contact: https://trueweb.com.ng/contact
