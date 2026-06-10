@@ -1,0 +1,129 @@
+---
+title: "Squad vs Paystack: Which Payment Gateway Should You Use in Nigeria? (2026)"
+excerpt: "A practical comparison of Squad by GTCO and Paystack for Nigerian developers — fees, settlement time, checkout UX, and which is better for your use case."
+date: "2026-06-03"
+author: "Bitrus Gadzama"
+tags: ["payments", "nigeria", "fintech", "squad", "paystack"]
+---
+
+Payment gateways are the plumbing of Nigerian e-commerce. Get them wrong and you lose sales. Two options dominate the serious builder's shortlist in 2026: **Squad by GTCO HabariPay** and **Paystack (owned by Stripe)**. Here's an honest comparison built from real integrations.
+
+## What they have in common
+
+Both support:
+- Card payments (Visa, Mastercard, Verve)
+- Bank transfers
+- USSD
+- NGN and USD settlements
+- Webhooks for payment events
+- Test/sandbox environments
+
+Both have solid uptime and reasonably fast customer support for businesses on paid plans.
+
+## Where they differ
+
+### Fees
+
+| Gateway | Card fee | Bank transfer | USD card |
+|---|---|---|---|
+| Squad | 1.5% + ₦100, capped at ₦2,000 | Free (business transfers) | 3.8% |
+| Paystack | 1.5% + ₦100, capped at ₦2,000 | 1.0% | 3.8% + $0.30 |
+
+**At low volume:** They're identical on card fees. Squad wins on bank transfer fees.
+
+**At high volume (₦5M+/month):** Both offer negotiated rates. Paystack tends to have more structured enterprise pricing; Squad is often negotiable if you're a GTCO business banking customer.
+
+### Settlement speed
+
+- **Paystack:** T+1 to T+3 depending on your tier. Basic accounts settle in 3 business days.
+- **Squad:** T+1 for most transactions. Faster than Paystack by default for business accounts linked to GTCO.
+
+If your cashflow is tight, Squad's settlement speed advantage matters.
+
+### Checkout UX
+
+Squad's checkout modal is clean and mobile-optimized. The GTCO banking integration means GTBank customers get a frictionless experience — no OTP delays on certain transactions.
+
+Paystack's checkout is more widely tested, appears on more Nigerian sites, and is what most customers expect to see. If you're targeting non-GTBank customers predominantly, Paystack may have higher conversion.
+
+**Practical advice:** Test both with real cards in your target market. Conversion rate beats fee savings 10:1.
+
+### Developer experience
+
+**Paystack** has the better documentation, more Stack Overflow answers, more Nigerian YouTube tutorials, and a larger developer community. If you're new to payment integration in Nigeria, Paystack is the easier starting point.
+
+**Squad** has improved significantly in 2025. The API design is RESTful, webhooks use HMAC-SHA512 (strong security), and the documentation now covers most use cases. The `X-Squad-Encrypted-Body` webhook signature header is well-implemented.
+
+```typescript
+// Squad webhook verification (HMAC-SHA512)
+import crypto from "crypto";
+
+function verifySquadWebhook(rawBody: string, signature: string): boolean {
+  const expected = crypto
+    .createHmac("sha512", process.env.SQUAD_SECRET_KEY!)
+    .update(rawBody)
+    .digest("hex")
+    .toUpperCase();
+  return expected === signature.toUpperCase();
+}
+```
+
+```typescript
+// Paystack webhook verification
+import crypto from "crypto";
+
+function verifyPaystackWebhook(rawBody: string, signature: string): boolean {
+  const hash = crypto
+    .createHmac("sha512", process.env.PAYSTACK_SECRET_KEY!)
+    .update(rawBody)
+    .digest("hex");
+  return hash === signature;
+}
+```
+
+Both are straightforward. The difference is Squad uses uppercase hex; Paystack uses lowercase.
+
+### Business account requirements
+
+**Paystack:** Available to individuals (personal accounts) and registered businesses. Easy signup, quick approval for low-volume merchants.
+
+**Squad:** Best suited to registered businesses. Linked to GTCO's banking infrastructure — if you have a GTCO business account, you get additional benefits. Sole proprietors can sign up but may face additional verification.
+
+### International payments
+
+If you need to accept USD card payments from customers outside Nigeria, both work — but Paystack has a slightly better reputation for international card acceptance rates, partly because of its Stripe backing.
+
+If you're running a B2C business targeting diaspora Nigerians, test both carefully.
+
+## Which should you use?
+
+| Scenario | Recommendation |
+|---|---|
+| First Nigerian payment integration | **Paystack** — better docs, larger community |
+| GTCO business banking customer | **Squad** — settlement speed, fee advantage on transfers |
+| High-volume B2C (marketplace, SaaS) | **Both** — A/B test, route by card BIN if possible |
+| Government/institutional contracts | **Squad** — GTCO banking credibility helps |
+| International-heavy customer base | **Paystack** (Stripe backing helps with international card acceptance) |
+| Building for multiple Nigerian clients | **Both** — different clients will have different requirements |
+
+## TrueWeb's approach
+
+We integrate Squad by default on new TrueWeb projects. Our reasons:
+- Settlement speed helps Nigerian SME cashflow
+- The HMAC-SHA512 webhook verification is clean to implement
+- GTCO partnership gives our clients confidence
+- The API is stable and well-documented enough for production
+
+We maintain Paystack as a secondary option for clients who specifically request it or have existing Paystack accounts.
+
+## The one thing that actually matters most
+
+Neither gateway will sink or save your business. What matters more:
+
+1. **Your checkout UX** — confusing flows kill conversion regardless of gateway
+2. **Your refund policy** — how you handle failed payments defines your brand
+3. **Your webhook reliability** — if you don't handle payment events properly, money will be lost
+
+Choose either, implement it well, and focus on what you're selling.
+
+[Need payment integration on your site? →](/start)

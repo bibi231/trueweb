@@ -1,0 +1,139 @@
+---
+title: "10 Most Common Mistakes on Nigerian Websites (And How to Fix Them)"
+excerpt: "From slow hosting to broken mobile layouts, these are the errors we find on almost every Nigerian business website — and how to fix them."
+date: "2026-06-05"
+author: "Bitrus Gadzama"
+tags: ["web development", "nigeria", "performance", "design"]
+---
+
+We review Nigerian business websites every week. The same mistakes appear again and again. This guide covers the 10 most common ones and how to fix each.
+
+## 1. Hosting on cheap Nigerian shared hosting
+
+**The problem:** Many Nigerian websites run on shared cPanel hosting at ₦3,000–₦10,000/year. These servers are overloaded, slow, and frequently go down. Your site might take 8–15 seconds to load — which means most visitors leave before it appears.
+
+**The fix:** Move to Vercel (free tier), Netlify, or a proper Nigerian cloud host. For WordPress sites, a managed host like Kinsta or WP Engine pays for itself in conversions. Page speed matters — Google uses it as a ranking factor, and Nigerian mobile users especially won't wait.
+
+**Benchmark:** Your Time To First Byte (TTFB) should be under 800ms. Check with [PageSpeed Insights](https://pagespeed.web.dev).
+
+## 2. No HTTPS / broken SSL
+
+**The problem:** Google Chrome shows a "Not Secure" warning for HTTP sites. Many Nigerian sites have expired SSL certificates or misconfigured HTTPS redirects.
+
+**The fix:** Use Let's Encrypt (free) via Certbot, or choose a host that auto-provisions SSL. Vercel and Netlify handle this automatically. Force HTTPS redirects in your `next.config.js` or `.htaccess`.
+
+**Impact:** Browsers now block form submissions on HTTP sites. If your contact form isn't sending emails, check your SSL first.
+
+## 3. No mobile optimization
+
+**The problem:** 70%+ of Nigerian internet traffic is mobile. Yet many business sites are built and tested only on desktop.
+
+**The fix:** Design mobile-first. Use CSS `min()` and `clamp()` for responsive typography. Test on real Android devices (not just Chrome DevTools mobile simulation). Common failure points: navigation menus, forms, and tables.
+
+```css
+/* Mobile-first font sizing */
+font-size: clamp(14px, 4vw, 18px);
+
+/* Stack columns on small screens */
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr !important; }
+}
+```
+
+## 4. Missing or broken contact forms
+
+**The problem:** Contact forms that silently fail are incredibly common. The form appears to submit, nothing happens, and the business owner never knows they're losing leads.
+
+**The fix:** Test your form end-to-end on a staging environment. Use services like Resend, Sendgrid, or Formspree for reliable email delivery. Add form submission confirmations to your analytics. Log submissions to a database so you have a backup if email fails.
+
+## 5. No meta descriptions or OG images
+
+**The problem:** When someone shares your site on WhatsApp or Twitter, it shows a broken preview — no image, no description, just a URL. Same problem affects Google search result snippets.
+
+**The fix:** Add `<meta name="description">` and Open Graph tags to every page. For Next.js:
+
+```typescript
+export const metadata = {
+  description: "Your 160-character description here",
+  openGraph: {
+    title: "Your Page Title",
+    description: "Same or similar description",
+    images: [{ url: "https://yourdomain.com/og.png", width: 1200, height: 630 }],
+  },
+};
+```
+
+Generate OG images at 1200×630px. They appear on WhatsApp previews, Facebook shares, and Twitter cards.
+
+## 6. Fonts that don't load
+
+**The problem:** Many Nigerian sites load Google Fonts over CDN. If the CDN is blocked or slow, the page renders in Times New Roman or similar fallback — which looks broken.
+
+**The fix:** Self-host your fonts using `next/font` (Next.js) or by downloading them into your project. This eliminates the CDN dependency and improves performance.
+
+```typescript
+import { Inter, Syne } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"], display: "swap" });
+const syne = Syne({ subsets: ["latin"], display: "swap", variable: "--font-syne" });
+```
+
+## 7. Social media icons linking to nothing
+
+**The problem:** The footer has Instagram, Twitter, Facebook, and LinkedIn icons. Click any of them and you go to the homepage of that platform — not the business's profile.
+
+**The fix:** Either link correctly or remove the icons. Broken social links signal inattention to detail to potential customers. A business with 2,000 Instagram followers should absolutely link there. A business with no social presence should remove the icons.
+
+## 8. Copyrighted stock photos
+
+**The problem:** Many Nigerian business sites use stock photos from iStock or Getty without purchasing licenses. This is copyright infringement and increasingly tracked with automated detection tools.
+
+**The fix:** Use free stock photo sites (Unsplash, Pexels, Pixabay), purchase licenses properly, or better yet — use real photos of your business, team, and work. Real photos convert better than stock photos for Nigerian audiences anyway.
+
+## 9. "About Us" pages with no real information
+
+**The problem:** Generic "We are a team of dedicated professionals committed to excellence" copy that says nothing about who you actually are.
+
+**The fix:** Your About page should answer: Who started this? Where are you based? What's your specific expertise? Who have you worked with? Nigerian customers want to know they're dealing with real people in Nigeria, not a ghost company.
+
+Include: real names, real photos, location (city at minimum), years in operation, number of clients served.
+
+## 10. No analytics or tracking
+
+**The problem:** The business owner has no idea how many people visit the site, where they come from, or what they do on the site.
+
+**The fix:** Install Google Analytics 4 or Microsoft Clarity (free, provides session recordings and heatmaps). Wire up goal tracking for contact form submissions, phone number clicks, and WhatsApp button clicks.
+
+For Next.js, use `@vercel/analytics` for zero-config analytics:
+
+```typescript
+import { Analytics } from "@vercel/analytics/react";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      {children}
+      <Analytics />
+    </>
+  );
+}
+```
+
+## Audit checklist
+
+Run through this on your current site:
+
+- [ ] Time to First Byte < 800ms (PageSpeed Insights)
+- [ ] HTTPS with valid SSL
+- [ ] Mobile viewport meta tag present
+- [ ] Navigation works on 375px wide screen
+- [ ] Contact form tested end-to-end (actually received the email)
+- [ ] Meta descriptions on every page
+- [ ] OG image specified
+- [ ] Social links go to actual profiles
+- [ ] Analytics installed and showing data
+- [ ] At least one real team photo on the site
+
+If you fail 3 or more, the site is hurting your business.
+
+[Let TrueWeb audit and fix your site →](/contact)

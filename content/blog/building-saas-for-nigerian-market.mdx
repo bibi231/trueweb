@@ -1,0 +1,154 @@
+---
+title: "Building a SaaS for the Nigerian Market: What Developers Get Wrong"
+excerpt: "Payment friction, mobile-first requirements, multilingual support, and the infrastructure decisions that determine whether your Nigerian SaaS lives or dies."
+date: "2026-06-08"
+author: "Bitrus Gadzama"
+tags: ["saas", "nigeria", "product", "startup"]
+---
+
+TrueWeb has built 6 SaaS products targeting the Nigerian market. We've learned what works, what fails, and what advice from Western SaaS playbooks simply doesn't apply here. This is the practical guide.
+
+## The Nigerian SaaS landscape in 2026
+
+Nigeria has 220 million people, 120 million internet users, and a software adoption curve that's accelerating rapidly. The market is real. But the infrastructure, behavior patterns, and payment realities are different from the US or UK.
+
+What this means: you can't copy a US SaaS, slap "for Nigeria" on it, and expect to win. You need to design for the actual user.
+
+## Mistake 1: Treating payment as an afterthought
+
+In the US, you wire up Stripe and it works. In Nigeria, payment integration is one of the most complex parts of your product.
+
+**The issues:**
+- Multiple payment methods required: cards, bank transfer, USSD, POS
+- Card decline rates are higher (some banks block online transactions by default)
+- Settlement timing affects your cashflow (T+1 to T+3)
+- International cards need different processing than local cards
+- PCI compliance requirements are real even for Nigerian businesses
+
+**The solution:** Integrate Squad (GTCO HabariPay) or Paystack from day one. Don't use PayPal as your primary for Nigerian customers — the local bank issues around PayPal withdrawals create too much friction.
+
+Build your billing around webhooks, not synchronous API calls. Payment events fire asynchronously:
+
+```typescript
+// Wrong: synchronous, will fail on timeouts
+const paymentResult = await paymentGateway.charge(card, amount);
+if (paymentResult.success) grantAccess();
+
+// Right: grant access only on confirmed webhook
+app.post("/webhook", async (req) => {
+  const event = verifyAndParse(req);
+  if (event.type === "charge.success") {
+    await grantAccess(event.data.email);
+    await sendReceipt(event.data.email, event.data.amount);
+  }
+});
+```
+
+## Mistake 2: Desktop-first design
+
+71% of Nigerian internet users access the web primarily on mobile. The median device is a mid-range Android phone with 2–4GB RAM, not a MacBook Pro.
+
+**Design implications:**
+- Minimum touch target size: 44px × 44px
+- Bottom navigation bars over sidebar menus
+- Minimal animations (CPU/GPU constrained on budget devices)
+- Data-conscious features (don't load 5MB of images on the dashboard)
+- Test on actual Android devices, not just Chrome DevTools
+
+The best Nigerian SaaS products we've seen work flawlessly on a ₦70,000 Tecno phone. If your app struggles there, it struggles with most of your potential market.
+
+## Mistake 3: English-only UI
+
+Nigeria has 500+ languages. English is the official language but Pidgin is the lingua franca. For consumer products targeting broad audiences — especially B2C — English-only support means you're excluding the informal market.
+
+**Practical approach:**
+1. Start English-only for B2B products targeting formal businesses
+2. Add Pidgin as a "personality" option in conversational UIs (chat bots, support, onboarding)
+3. For B2C in specific regions, consider Yoruba or Hausa for high-frequency UI text
+4. SupportAI, one of our products, supports English + Pidgin + Yoruba + Hausa for customer service bots
+
+The implementation:
+
+```typescript
+type Language = "english" | "pidgin" | "yoruba" | "hausa";
+
+const STRINGS: Record<Language, Record<string, string>> = {
+  english: { greeting: "Hello! How can I help you today?" },
+  pidgin:  { greeting: "How you dey? Wetin I fit help you with?" },
+  yoruba:  { greeting: "Ẹ káabọ̀! Kíni mo lè ṣe fún ẹ?" },
+  hausa:   { greeting: "Sannu! Yaya zan iya taimaka maka?" },
+};
+```
+
+## Mistake 4: Ignoring intermittent connectivity
+
+Nigerian internet is unreliable. NEPA cuts power, phones switch between WiFi and mobile data, and 3G drops to 2G in suburban areas.
+
+**What this means for your SaaS:**
+- Save drafts automatically, don't rely on users hitting "Save"
+- Optimistic UI updates (show success immediately, sync in background)
+- Queue failed API calls and retry when connection returns
+- Cache critical data locally (IndexedDB, localStorage)
+- Never block the UI waiting for a network response
+
+```typescript
+// Optimistic update pattern
+async function updateSetting(key: string, value: string) {
+  // Update UI immediately
+  setSettings(prev => ({ ...prev, [key]: value }));
+  
+  // Try to sync, don't block
+  try {
+    await api.updateSetting(key, value);
+  } catch {
+    // Queue for retry
+    syncQueue.add({ action: "updateSetting", key, value });
+  }
+}
+```
+
+## Mistake 5: Wrong pricing model
+
+Free trials work differently in Nigeria. The "freemium → paid" conversion funnel assumes users have payment methods ready. Many Nigerian users don't have cards, or their cards aren't set up for online transactions.
+
+**What works better:**
+- Free tier with meaningful functionality (not crippled)
+- Bank transfer as a first-class payment option (many prefer this to cards)
+- Annual billing with a discount (better cashflow for you, lower effective monthly price for them)
+- Localized pricing in NGN, not USD (psychological anchoring matters)
+
+**What fails:**
+- USD-only pricing (₦1,500/month feels affordable; $1/month feels like a trap)
+- Credit card-only trials
+- "Start free, no card required" → first charge hits a week later (users feel tricked)
+
+## The Nigerian SaaS infrastructure stack (battle-tested)
+
+After building 6 products, here's what we reach for:
+
+| Layer | Choice | Why |
+|---|---|---|
+| Frontend | React + Vite or Next.js | Fast, excellent ecosystem |
+| Backend | Node/Express on Render | Simple deployment, Nigerian-friendly pricing |
+| Database | Neon Postgres | Serverless, scales to zero, Drizzle ORM |
+| Auth | Firebase Auth or NextAuth | Handles Google/GitHub/email |
+| Payments | Squad or Paystack | Nigerian market support |
+| Email | Resend | Modern API, React Email templates |
+| Hosting | Vercel + Render | Vercel for frontend, Render for backend |
+| Analytics | Google Analytics 4 | Standard, free |
+
+This stack can handle 10,000 users/month for under ₦50,000/month in infrastructure costs.
+
+## The one thing that matters most
+
+Nigerian SaaS success comes down to one thing: **does your product solve a real, expensive problem for Nigerian businesses?**
+
+The technology is secondary. We've seen beautifully engineered products fail because they solved a problem Nigerian businesses don't consider urgent. We've seen simple tools (WhatsApp bots, Excel-to-dashboard converters) make millions because they solved a daily pain point.
+
+Research first. Build second. Optimize third.
+
+If you're at the research stage, spend time with your target customers. Not LinkedIn surveys. Real conversations in offices, markets, and WhatsApp groups.
+
+The Nigerian market rewards founders who understand the context deeply enough to build for it specifically.
+
+[Build your Nigerian SaaS with TrueWeb →](/start)

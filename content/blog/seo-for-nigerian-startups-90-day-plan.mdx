@@ -1,0 +1,179 @@
+---
+title: "SEO for Nigerian Startups: A Realistic 90-Day Plan"
+excerpt: "You don't need backlinks from Forbes. You need to rank for searches your actual customers are making. Here's the 90-day Nigerian SEO playbook."
+date: "2026-06-09"
+author: "Bitrus Gadzama"
+tags: ["seo", "nigeria", "marketing", "startup"]
+---
+
+Most Nigerian business owners hear "SEO" and picture a 2-year project that costs ₦500,000 with no guaranteed results. That's fair — plenty of agencies have sold exactly that story. This guide is different. It's a practical 90-day plan you can execute yourself or delegate clearly.
+
+## What SEO actually means for a Nigerian SME
+
+You're not competing with CNN or Jumia for generic traffic. You're competing for searches like:
+- "web developer Lagos"
+- "affordable chatbot for small business Nigeria"
+- "paystack integration developer"
+- "e-commerce website Abuja"
+
+These searches have **high commercial intent** and **low competition**. Ranking for 5 of them can generate more qualified leads than 100,000 Instagram followers.
+
+## Day 1–14: Technical foundation
+
+Before any content, fix the technical issues that prevent Google from crawling and indexing your site.
+
+### 1. Submit your sitemap
+
+```
+https://yourdomain.com.ng/sitemap.xml
+```
+
+For Next.js, create `src/app/sitemap.ts`:
+
+```typescript
+export default function sitemap() {
+  return [
+    { url: "https://yourdomain.com.ng", lastModified: new Date() },
+    { url: "https://yourdomain.com.ng/services", lastModified: new Date() },
+    { url: "https://yourdomain.com.ng/blog", lastModified: new Date() },
+    // Add all pages
+  ];
+}
+```
+
+Submit to [Google Search Console](https://search.google.com/search-console) and [Bing Webmaster Tools](https://www.bing.com/webmasters).
+
+### 2. Add structured data (JSON-LD)
+
+JSON-LD tells Google what your business is. Add to your homepage:
+
+```typescript
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "TrueWeb Solutions",
+  url: "https://trueweb.com.ng",
+  logo: "https://trueweb.com.ng/logo.png",
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+234-XXX-XXXX",
+    contactType: "customer service",
+    areaServed: "NG",
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "NG",
+    addressLocality: "Lagos",
+  },
+};
+
+// In your page:
+<script type="application/ld+json">{JSON.stringify(schema)}</script>
+```
+
+### 3. Fix meta tags
+
+Every page needs:
+- `<title>` — 50–60 characters, include your main keyword
+- `<meta name="description">` — 150–160 characters
+- `<link rel="canonical">` — prevents duplicate content issues
+- Open Graph tags for social sharing
+
+### 4. Check mobile usability
+
+Go to [Google Search Console → Mobile Usability](https://search.google.com/search-console). Fix every flagged issue.
+
+## Day 15–30: Keyword research for Nigeria
+
+### Find what your customers search for
+
+Use these free tools:
+1. **Google Keyword Planner** — search volume data
+2. **Google Search → autocomplete** — type your service + Nigeria/Lagos/Abuja
+3. **Answer the Public** — question-based keywords
+4. **Google Search Console** — what you already rank for
+
+### Nigerian-specific keyword patterns
+
+Nigerian searches often include:
+- City names: "Lagos", "Abuja", "Port Harcourt", "Kano"
+- "cheap" or "affordable" — price sensitivity is explicit in searches
+- "Nigeria" as a qualifier — "web developer Nigeria" vs "web developer"
+- Pidgin hybrid searches: "cheapest website naija"
+
+### Keyword priority matrix
+
+| Keyword | Monthly searches | Competition | Priority |
+|---|---|---|---|
+| web developer Lagos | 500–1000 | Medium | High |
+| website design Nigeria | 1000–5000 | Medium | High |
+| affordable website design Nigeria | 100–500 | Low | High |
+| e-commerce website Nigeria | 500–1000 | Low | High |
+| SaaS developer Nigeria | 50–100 | Very Low | Medium |
+
+Start with "High priority, Low competition" keywords.
+
+## Day 31–60: Content creation
+
+This is where most Nigerian businesses skip SEO — because it requires actual work. But content is where you win long-term.
+
+### The content formula that works
+
+For each target keyword, create one piece of content that is:
+1. **Longer than the top 3 ranking results** — typically 1200–2000 words
+2. **More specific** — actual prices, real examples, local context
+3. **More recent** — add the current year to your title
+
+### Content types that rank well for Nigerian B2B
+
+- Comparison articles: "Squad vs Paystack" — people researching buying decisions
+- How-to guides: "How to set up online payment on your Nigerian website"
+- Pricing guides: "How much does a website cost in Nigeria?" (our most-viewed post)
+- Local case studies: "How a Lagos restaurant increased online orders by 40%"
+- Tool roundups: "Best website builders for Nigerian small businesses"
+
+### The internal linking rule
+
+Every new post links to 2–3 existing posts. Every existing post links to the new post if relevant. This spreads "link juice" across your site and helps Google discover new content.
+
+## Day 61–90: Authority building
+
+### Get local backlinks
+
+Backlinks (other sites linking to you) are a major ranking factor. For Nigerian SMEs, focus on:
+
+1. **Nigerian business directories**: VConnect, BusinessList Nigeria, Nairaland business listings
+2. **Industry associations**: NITDA, NCS, APCON for marketing agencies
+3. **Guest posts on Nigerian tech blogs**: TechCabal, Techpoint Africa, Nairametrics
+4. **Client websites**: Ask satisfied clients to link to you from their "Built by" footer
+5. **Press releases**: When you launch something, send to Nigerian tech media
+
+### Google Business Profile
+
+If you have a physical office (even shared/co-working), claim your Google Business Profile at [business.google.com](https://business.google.com). This puts you on Google Maps and the local knowledge panel.
+
+Fill it completely: photos, services, opening hours, website link, phone number.
+
+## Measuring success
+
+After 90 days, check:
+
+1. **Google Search Console → Performance**: Which queries show impressions? Which rank positions improved?
+2. **Organic traffic in Google Analytics**: Is traffic from "organic search" growing?
+3. **Keyword tracking**: Use a free tool like Ubersuggest to track 5–10 target keywords
+
+**Realistic 90-day expectations:**
+- Technical fixes indexed within 2–4 weeks
+- New content appearing in search within 2–6 weeks
+- First page rankings for long-tail keywords within 60–90 days
+- Significant traffic growth: 3–6 months for competitive terms
+
+SEO is not fast. It is compounding. A blog post you write today can bring leads for 3 years without additional investment.
+
+## The one thing most Nigerian businesses skip
+
+Consistency. Most businesses write 2–3 blog posts, see no traffic in week 2, and stop.
+
+The algorithm rewards consistency. A site publishing one quality article per week beats a site that published 10 articles in one month then went silent. Set a realistic content calendar — even monthly publishing builds momentum over a year.
+
+[Let TrueWeb build your SEO-ready website →](/start)
