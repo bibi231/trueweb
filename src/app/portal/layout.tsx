@@ -84,4 +84,18 @@ export default async function PortalLayout({ children }: { children: React.React
               await signOut({ redirectTo: "/" });
             }}
           >
-            <button type="submit" style={{ display: "flex", alignItems: "center", gap: 10, width: "100%", padding: "10px 12px",
+            <button type="submit" style={{ display: "flex", alignItems: "center", gap: 10, width: "100%", padding: "10px 12px", borderRadius: 9, background: "none", border: "none", cursor: "pointer", fontSize: 13.5, color: "var(--text-faint)", fontFamily: "inherit", transition: "color 0.15s" }}>
+              <LogOut size={15} strokeWidth={1.8} />
+              Sign out
+            </button>
+          </form>
+        </div>
+      </aside>
+
+      {/* Main */}
+      <main style={{ flex: 1, overflow: "auto", padding: "32px 36px" }}>
+        {children}
+      </main>
+    </div>
+  );
+}

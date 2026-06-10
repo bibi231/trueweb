@@ -39,4 +39,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         )}
         {/* Google AdSense */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7798519284162823" crossOrigin="anonymous" />
-        <meta name="google-adsense-account" content="ca-pub-779851
+        <meta name="google-adsense-account" content="ca-pub-7798519284162823" />
+      </head>
+      <body>
+        <ThemeProvider>
+          <SmoothScrollProvider>
+            {children}
+          </SmoothScrollProvider>
+        </ThemeProvider>
+        <Analytics />
+        <CookieBanner />
+      </body>
+    </html>
+  );
+}
