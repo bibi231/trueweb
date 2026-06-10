@@ -18,13 +18,18 @@ export type Flow =
   | "support-handoff";
 
 const FROM: Record<Site, string> = {
-  trueweb:  "TrueWeb <hello@trueweb.com.ng>",
-  supportai: "SupportAI <hello@trueweb.com.ng>",
-  replyai:  "ReplyAI <hello@trueweb.com.ng>",
-  harvestai: "HarvestAI <hello@trueweb.com.ng>",
+  trueweb:   "TrueWeb Solutions <hello@trueweb.com.ng>",
+  supportai: "SupportAI <hello@supportai.com.ng>",
+  replyai:   "ReplyAI <hello@replyai.com.ng>",
+  harvestai: "HarvestAI <hello@harvestai.com.ng>",
 };
 
-const REPLY_TO = "support@trueweb.com.ng";
+const REPLY_TO: Record<Site, string> = {
+  trueweb:   "support@trueweb.com.ng",
+  supportai: "support@supportai.com.ng",
+  replyai:   "support@replyai.com.ng",
+  harvestai: "support@harvestai.com.ng",
+};
 
 interface SendOptions {
   site: Site;
@@ -41,7 +46,7 @@ export async function sendEmail({ site, flow, to, subject, react, tags }: SendOp
 
   const result = await resend.emails.send({
     from: FROM[site],
-    replyTo: REPLY_TO,
+    replyTo: REPLY_TO[site],
     to: Array.isArray(to) ? to : [to],
     subject,
     react,

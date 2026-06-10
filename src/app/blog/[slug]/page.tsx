@@ -39,6 +39,29 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main style={{ maxWidth: 760, margin: "0 auto", padding: "80px 24px 120px" }}>
+      {/* JSON-LD Article schema for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: post.title,
+            description: post.excerpt,
+            author: { "@type": "Person", name: post.author },
+            publisher: {
+              "@type": "Organization",
+              name: "TrueWeb Solutions",
+              logo: { "@type": "ImageObject", url: "https://trueweb.com.ng/logo.png" },
+            },
+            datePublished: post.date,
+            dateModified: post.date,
+            mainEntityOfPage: { "@type": "WebPage", "@id": `https://trueweb.com.ng/blog/${slug}` },
+            image: post.image ?? "https://trueweb.com.ng/og.png",
+            keywords: post.tags.join(", "),
+          }),
+        }}
+      />
       {/* Breadcrumb */}
       <div style={{ display: "flex", gap: 8, fontSize: 13, color: "var(--text-faint)", marginBottom: 32 }}>
         <Link href="/blog" style={{ color: "var(--teal)" }}>Blog</Link>
