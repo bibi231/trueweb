@@ -40,6 +40,23 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Google AdSense */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7798519284162823" crossOrigin="anonymous" />
         <meta name="google-adsense-account" content="ca-pub-7798519284162823" />
+        {/* JSON-LD: Organization */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "TrueWeb Solutions",
+          "url": "https://trueweb.com.ng",
+          "logo": "https://trueweb.com.ng/logo.png",
+          "sameAs": ["https://replyai.com.ng", "https://harvestai.com.ng", "https://supportai.com.ng"],
+        })}} />
+        {/* JSON-LD: WebSite */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "TrueWeb Solutions",
+          "url": "https://trueweb.com.ng",
+          "potentialAction": { "@type": "SearchAction", "target": { "@type": "EntryPoint", "urlTemplate": "https://trueweb.com.ng/blog?q={search_term_string}" }, "query-input": "required name=search_term_string" },
+        })}} />
       </head>
       <body>
         <ThemeProvider>
