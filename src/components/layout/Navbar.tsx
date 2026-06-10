@@ -191,4 +191,8 @@ export function Navbar() {
           .tw-portal-link { display: none !important; }
           .tw-hamburger { display: block !important; }
         }
-        @media (min-width: 769px) { .tw-mobile-nav { display: none !importa
+        @media (min-width: 769px) { .tw-mobile-nav { display: none !important; } }
+      `}</style>
+    </>
+  );
+}
