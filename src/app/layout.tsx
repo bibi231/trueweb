@@ -57,6 +57,22 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           "url": "https://trueweb.com.ng",
           "potentialAction": { "@type": "SearchAction", "target": { "@type": "EntryPoint", "urlTemplate": "https://trueweb.com.ng/blog?q={search_term_string}" }, "query-input": "required name=search_term_string" },
         })}} />
+        {/*
+          AD NETWORKS — activate by replacing placeholders:
+
+          Monetag: monetag.com → Publisher → Sites → get MONETAG_SITE_KEY
+          <meta name="monetag" content="MONETAG_SITE_KEY" />
+          <script async src="https://s.pubmine.com/showad.js" />
+
+          Adsterra: adsterra.com → Publisher → Add site → get ADSTERRA_KEY
+          <script async data-cfasync="false" src="//pl24ADSTERRA_KEY.profitableratecpm.com/ADSTERRA_KEY/invoke.js" />
+
+          PropellerAds: propellerads.com → Sites → Add site → get PROPELLER_ZONE_ID
+          <script async src="https://hbstatic.net/natush.min.js" data-cfasync="false" />
+
+          Media.net: media.net → Publisher → get MEDIA_NET_CID
+          <script async src="//contextual.media.net/dmedianet.js?cid=MEDIA_NET_CID" crossOrigin="anonymous" />
+        */}
       </head>
       <body>
         <ThemeProvider>
