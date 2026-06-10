@@ -20,7 +20,8 @@ export default async function PortalLayout({ children }: { children: React.React
   const pathname = hdrs.get("x-pathname") ?? hdrs.get("x-invoke-path") ?? hdrs.get("next-url") ?? "";
   const isLoginRoute = pathname.includes("/portal/login");
 
-  const session = await auth();
+  let session = null;
+  try { session = await auth(); } catch { /* DB/auth not configured — fall through to login redirect */ }
   if (!session?.user && !isLoginRoute) redirect("/portal/login");
 
   // Render the login page without the sidebar chrome.

@@ -7,7 +7,8 @@ const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com"];
 const isConfigured = !!(
   process.env.AUTH_SECRET &&
   process.env.GOOGLE_CLIENT_ID &&
-  process.env.GOOGLE_CLIENT_SECRET
+  process.env.GOOGLE_CLIENT_SECRET &&
+  process.env.DATABASE_URL
 );
 
 const makeConfig = async () => {
