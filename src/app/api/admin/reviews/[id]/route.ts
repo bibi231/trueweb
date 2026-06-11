@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { reviews } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
-const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com", "bitrus@trueweb.ng"];
+const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrus@trueweb.ng"];
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {

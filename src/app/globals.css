@@ -342,3 +342,54 @@ h1, h2, h3, h4, h5 {
   color: var(--teal);
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
 }
+
+/* ─── Polish layer (2026-06) ───────────────────────────────── */
+::selection {
+  background: rgba(0, 212, 212, 0.28);
+  color: var(--text);
+}
+
+/* Branded scrollbar */
+* { scrollbar-width: thin; scrollbar-color: rgba(0, 212, 212, 0.35) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(0,212,212,0.45), rgba(0,212,212,0.15));
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 212, 212, 0.55); }
+
+/* Accessible focus rings (keyboard only) */
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Button micro-interactions */
+.btn-teal, .btn-ghost {
+  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.4, 1), box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+  will-change: transform;
+}
+.btn-teal:hover { transform: translateY(-1.5px); box-shadow: 0 8px 28px rgba(0, 212, 212, 0.35); }
+.btn-teal:active, .btn-ghost:active { transform: translateY(0) scale(0.985); }
+.btn-ghost:hover { transform: translateY(-1px); }
+
+/* Link polish */
+a { text-underline-offset: 3px; }
+
+/* Card hover lift for surface cards */
+@media (hover: hover) {
+  [class*="card"]:hover, .tw-lift:hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+}
+
+/* Subtle entrance for images */
+img { transition: opacity 0.3s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

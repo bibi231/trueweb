@@ -15,7 +15,7 @@ const LeadSchema = z.object({
   source: z.string().max(64).optional(),
 });
 
-const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com", "bitrus@trueweb.ng"];
+const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrus@trueweb.ng"];
 
 export async function POST(req: Request) {
   try {
