@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: "Bitrus J-K Gadzama — Founder of TrueWeb Solutions",
     description:
       "Software engineer, product builder, and founder of TrueWeb Solutions. Based in Abuja, Nigeria.",
-    images: [{ url: "/founder/Bitrus_white_agbada.jpg", width: 800, height: 1000 }],
+    images: [{ url: "/founder/agbada.png", width: 800, height: 1000 }],
   },
 };
 
@@ -130,8 +130,8 @@ export default function FounderPage() {
             {/* Portrait */}
             <div style={{ position: "relative" }}>
               <HoverPortrait
-                primarySrc="/founder/Bitrus_white_agbada.jpg"
-                hoverSrc="/founder/Bitrus_bw_durag.jpg"
+                primarySrc="/founder/agbada.png"
+                hoverSrc="/founder/hf_portrait.png"
                 name="Bitrus J-K Gadzama"
                 width={480}
                 height={600}
@@ -255,7 +255,7 @@ export default function FounderPage() {
               <div className="card" style={{ overflow: "hidden", padding: 0 }}>
                 <div style={{ position: "relative", aspectRatio: "3/4" }}>
                   <Image
-                    src="/founder/Bitrus_bw_durag.jpg"
+                    src="/founder/hf_portrait.png"
                     alt="Bitrus Gadzama"
                     fill
                     style={{ objectFit: "cover" }}
@@ -443,8 +443,8 @@ export default function FounderPage() {
               }}
             >
               {[
-                { src: "/founder/Bitrus_white_agbada.jpg", alt: "Bitrus in white agbada" },
-                { src: "/founder/Bitrus_bw_durag.jpg", alt: "Bitrus in durag — B&W portrait" },
+                { src: "/founder/agbada.png", alt: "Bitrus in white agbada" },
+                { src: "/founder/hf_portrait.png", alt: "Bitrus in casual portrait" },
               ].map((img) => (
                 <div
                   key={img.src}

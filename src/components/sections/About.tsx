@@ -24,9 +24,9 @@ function FounderPortraitHover() {
     <a href="/founder" style={{ display: "block", borderRadius: 18, overflow: "hidden", position: "relative", flexShrink: 0, aspectRatio: "3/4", background: "var(--surface)" }}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocus={() => setHovered(true)} onBlur={() => setHovered(false)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/founder/Bitrus_white_agbada.jpg" alt="Bitrus J-K Gadzama, founder TrueWeb Solutions" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity 0.5s", position: "absolute", inset: 0, opacity: hovered ? 0 : 1, borderRadius: 18 }} />
+      <img src="/founder/agbada.png" alt="Bitrus J-K Gadzama, founder TrueWeb Solutions" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity 0.5s", position: "absolute", inset: 0, opacity: hovered ? 0 : 1, borderRadius: 18 }} />
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/founder/Bitrus_bw_durag.jpg" alt="Bitrus Gadzama" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", borderRadius: 18, opacity: hovered ? 1 : 0, transition: "opacity 0.5s" }} />
+      <img src="/founder/hf_portrait.png" alt="Bitrus Gadzama" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", borderRadius: 18, opacity: hovered ? 1 : 0, transition: "opacity 0.5s" }} />
     </a>
   );
 }
