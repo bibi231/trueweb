@@ -42,9 +42,9 @@
   --shadow:      rgba(0, 0, 0, 0.08);
   --btn-text:    #ffffff;
   --invert-img:  0;
-  --teal:        #0097a7;
-  --teal-dim:    #00838f;
-  --teal-glow:   rgba(0, 151, 167, 0.12);
+  --teal:        #00b0b0;
+  --teal-dim:    #008e8e;
+  --teal-glow:   rgba(0, 176, 176, 0.15);
 }
 
 /* ─── Base reset ────────────────────────────────────────────── */

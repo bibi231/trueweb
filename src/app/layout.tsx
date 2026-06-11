@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Syne } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { SmoothScrollProvider } from "@/components/ui/SmoothScrollProvider";
 import { CookieBanner } from "@/components/ui/CookieBanner";

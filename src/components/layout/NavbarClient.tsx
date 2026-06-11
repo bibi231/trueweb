@@ -35,7 +35,7 @@ export function NavbarClient({ isOwner }: { isOwner: boolean }) {
       <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: scrolled ? "rgba(var(--bg-rgb), 0.88)" : "transparent", backdropFilter: scrolled ? "blur(16px)" : "none", WebkitBackdropFilter: scrolled ? "blur(16px)" : "none", borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent", transition: "background 0.3s, border-color 0.3s, backdrop-filter 0.3s" }}>
         <nav style={{ maxWidth: 1200, margin: "0 auto", padding: "0 28px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
-            <span className="tw-logo-badge" style={{ width: 34, height: 34, borderRadius: 10, background: "linear-gradient(135deg, var(--teal), var(--teal-dim))", display: "grid", placeItems: "center", fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, color: "#050507", boxShadow: "0 0 22px rgba(0,212,212,0.28)" }}>T</span>
+            <span className="tw-logo-badge" style={{ width: 34, height: 34, borderRadius: 10, display: "grid", placeItems: "center", fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18 }}>T</span>
             <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 19, color: "var(--text)", letterSpacing: "-0.02em" }}>TrueWeb</span>
           </Link>
           <ul style={{ display: "flex", gap: 4, listStyle: "none", flex: 1, justifyContent: "center" }} className="tw-desktop-nav">

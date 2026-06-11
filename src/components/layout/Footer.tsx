@@ -5,9 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 const NETWORK = [
-  { name: "ReplyAI", url: "https://replyai.com.ng", favicon: "https://replyai.com.ng/favicon.ico", color: "#6366f1" },
-  { name: "HarvestAI", url: "https://harvestai.com.ng", favicon: "https://harvestai.com.ng/favicon.ico", color: "#d97706" },
   { name: "SupportAI", url: "https://supportai.com.ng", favicon: "https://supportai.com.ng/favicon.ico", color: "#0ea5e9" },
+  { name: "ReplyAI", url: "https://replyai.com.ng", favicon: "https://replyai.com.ng/favicon.ico", color: "#6366f1" },
+  { name: "HarvestAI", url: "https://harvestai.com.ng", favicon: "https://harvestai.com.ng/favicon.ico", color: "#f5a623" },
+  { name: "TrueWeb", url: "https://trueweb.com.ng", favicon: "https://trueweb.com.ng/favicon.ico", color: "#00d4d4" },
 ];
 
 function FaviconImg({ url, name, color }: { url: string; name: string; color: string }) {
