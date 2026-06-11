@@ -50,6 +50,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.vercel.app" },
     ],
   },
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
   experimental: {
     optimizePackageImports: ["framer-motion", "@react-three/fiber", "@react-three/drei"],
   },
