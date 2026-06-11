@@ -10,6 +10,7 @@
 
   /* Dark (default) */
   --bg:          #050507;
+  --bg-rgb:      5, 5, 7;
   --bg-2:        #09090e;
   --surface:     #0d0f17;
   --surface-2:   #131621;
@@ -27,6 +28,7 @@
 
 [data-theme="light"] {
   --bg:          #f8fafc;
+  --bg-rgb:      248, 250, 252;
   --bg-2:        #f1f5f9;
   --surface:     #ffffff;
   --surface-2:   #f1f5f9;
@@ -92,8 +94,8 @@ h1, h2, h3, h4, h5 {
 
 [data-theme="light"] .mesh-gradient {
   background:
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0, 151, 167, 0.05) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(99, 102, 241, 0.04) 0%, transparent 60%);
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0, 151, 167, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(99, 102, 241, 0.10) 0%, transparent 60%);
 }
 
 @keyframes mesh-drift {
@@ -114,7 +116,9 @@ h1, h2, h3, h4, h5 {
 .aurora-2 { width: 500px; height: 350px; background: radial-gradient(ellipse, #6366f1 0%, transparent 70%); bottom: -80px; right: -60px; animation-delay: -9s; }
 @keyframes aurora-float { from { transform: translate(0, 0) scale(1); } to { transform: translate(40px, 20px) scale(1.1); } }
 
-[data-theme="light"] .aurora { opacity: 0.08; }
+[data-theme="light"] .aurora { opacity: 0.12; }
+[data-theme="light"] .aurora-1 { background: radial-gradient(ellipse, rgba(0, 151, 167, 0.4) 0%, transparent 70%); }
+[data-theme="light"] .aurora-2 { background: radial-gradient(ellipse, rgba(99, 102, 241, 0.3) 0%, transparent 70%); }
 
 /* Dot grid */
 .dot-grid {
@@ -130,10 +134,16 @@ h1, h2, h3, h4, h5 {
 
 /* ─── Gradient text ──────────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, var(--text) 0%, var(--teal) 55%, #67e8f9 100%);
+  background: linear-gradient(135deg, var(--text) 0%, var(--teal) 45%, #63b3ed 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+[data-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #0f172a 0%, #0097a7 45%, #2b6cb0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 /* ─── Eyebrow + divider ──────────────────────────────────────── */
