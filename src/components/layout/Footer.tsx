@@ -108,7 +108,7 @@ export function Footer() {
           <div>
             <h4 style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "#fff", marginBottom: 16 }}>Company</h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
-              {[{ label: "About", href: "/about" }, { label: "Our Work", href: "/work" }, { label: "Pricing", href: "/pricing" }, { label: "Founder", href: "/founder" }, { label: "Reviews", href: "/testimonials" }, { label: "Contact", href: "/contact" }, { label: "Client Portal", href: "/portal" }].map((l) => (
+              {[{ label: "About", href: "/about" }, { label: "Our Work", href: "/work" }, { label: "Pricing", href: "/pricing" }, { label: "Blog", href: "/blog" }, { label: "Founder", href: "/founder" }, { label: "Reviews", href: "/testimonials" }, { label: "Contact", href: "/contact" }, { label: "Client Portal", href: "/portal" }].map((l) => (
                 <li key={l.label}><Link href={l.href} style={{ fontSize: 13.5, color: "#8892a4", textDecoration: "none", transition: "color 0.15s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")} onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8892a4")}>{l.label}</Link></li>
               ))}
             </ul>
