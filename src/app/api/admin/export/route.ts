@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { leads, newsletter } from "@/lib/db/schema";
 import { desc } from "drizzle-orm";
 
-const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com"];
+const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com", "bitrus@trueweb.ng"];
 
 function toCSV(rows: Record<string, unknown>[]): string {
   if (!rows.length) return "";

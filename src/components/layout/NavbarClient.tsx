@@ -73,9 +73,9 @@ export function NavbarClient({ isOwner }: { isOwner: boolean }) {
         )}
       </header>
       <style>{`
-        @media (max-width: 900px) { .tw-desktop-nav { display: none !important; } .tw-admin-link { display: none !important; } }
-        @media (max-width: 768px) { .tw-portal-link { display: none !important; } .tw-hamburger { display: block !important; } }
-        @media (min-width: 769px) { .tw-mobile-nav { display: none !important; } }
+        @media (max-width: 900px) { .tw-desktop-nav { display: none !important; } .tw-admin-link { display: none !important; } .tw-hamburger { display: block !important; } }
+        @media (max-width: 768px) { .tw-portal-link { display: none !important; } }
+        @media (min-width: 901px) { .tw-mobile-nav { display: none !important; } }
       `}</style>
     </>
   );

@@ -81,10 +81,12 @@ function CartSheet({ onClose }: { onClose: () => void }) {
   const { items, remove, total } = useCart();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const checkout = async () => {
     if (!email || items.length === 0) return;
     setLoading(true);
+    setError("");
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
@@ -92,7 +94,13 @@ function CartSheet({ onClose }: { onClose: () => void }) {
         body: JSON.stringify({ email, items }),
       });
       const data = await res.json();
-      if (data.checkoutUrl) window.location.href = data.checkoutUrl;
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        setError("Couldn't start checkout. Please try again or contact us.");
+      }
+    } catch {
+      setError("Network error — check your connection and try again.");
     } finally { setLoading(false); }
   };
 
@@ -158,6 +166,9 @@ function CartSheet({ onClose }: { onClose: () => void }) {
             className="tw-input"
             style={{ marginBottom: 12 }}
           />
+          {error && (
+            <p style={{ fontSize: 12.5, color: "#f87171", marginBottom: 10, textAlign: "center" }}>{error}</p>
+          )}
           <button
             onClick={checkout}
             disabled={items.length === 0 || !email || loading}

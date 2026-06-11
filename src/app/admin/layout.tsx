@@ -11,7 +11,7 @@ import {
   Receipt, Globe, UserCheck, LogOut, ChevronRight,
 } from "lucide-react";
 
-const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com"];
+const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com", "bitrus@trueweb.ng"];
 
 const NAV = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },

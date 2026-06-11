@@ -162,9 +162,12 @@ export function ProjectWizard() {
       const data = await res.json();
       if (data.checkoutUrl) {
         setCheckoutUrl(data.checkoutUrl);
-        setDone(true);
       }
-    } catch { /* show error */ } finally { setSubmitting(false); }
+      // Brief was received even if checkout init failed — show done state either way
+      setDone(true);
+    } catch {
+      alert("Something went wrong submitting your brief. Please try again or email hello@trueweb.com.ng.");
+    } finally { setSubmitting(false); }
   };
 
   const stepContent: Record<Step, React.ReactNode> = {

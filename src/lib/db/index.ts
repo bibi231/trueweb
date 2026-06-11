@@ -18,4 +18,16 @@ export const db = new Proxy({} as ReturnType<typeof getDb>, {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (_db as unknown as Record<string | symbol, unknown>)[prop];
   },
+  // Required: @auth/drizzle-adapter detects the db dialect via
+  // Object.getPrototypeOf(db) (drizzle's `is()` helper). Without this trap
+  // the Proxy reports Object.prototype and the adapter throws
+  // "Unsupported database type" -> 500 on /portal and /admin.
+  getPrototypeOf() {
+    if (!_db) _db = getDb();
+    return Object.getPrototypeOf(_db);
+  },
+  has(_target, prop) {
+    if (!_db) _db = getDb();
+    return prop in (_db as object);
+  },
 });

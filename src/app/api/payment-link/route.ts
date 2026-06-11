@@ -14,7 +14,7 @@ const Schema = z.object({
 export async function POST(req: Request) {
   try {
     const session = await auth();
-    const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com"];
+    const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrusgadzama02@gmail.com", "bitrus@trueweb.ng"];
     if (!session?.user?.email || !OWNER_EMAILS.includes(session.user.email)) {
       return NextResponse.json({ error: "FORBIDDEN" }, { status: 403 });
     }
