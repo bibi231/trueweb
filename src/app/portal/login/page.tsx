@@ -52,6 +52,64 @@ export default function LoginPage() {
           Sign in to view your project status, messages, and invoices.
         </p>
 
+        <form
+          action={async (formData) => {
+            "use server";
+            await signIn("credentials", Object.fromEntries(formData));
+          }}
+          style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 24 }}
+        >
+          <input
+            name="email"
+            type="email"
+            placeholder="Email address"
+            required
+            style={{
+              padding: "12px 14px",
+              background: "var(--bg)",
+              border: "1px solid var(--border)",
+              borderRadius: 10,
+              color: "var(--text)",
+              fontSize: 14,
+            }}
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+            style={{
+              padding: "12px 14px",
+              background: "var(--bg)",
+              border: "1px solid var(--border)",
+              borderRadius: 10,
+              color: "var(--text)",
+              fontSize: 14,
+            }}
+          />
+          <button
+            type="submit"
+            style={{
+              padding: "12px",
+              background: "var(--teal)",
+              color: "#050507",
+              border: "none",
+              borderRadius: 10,
+              fontWeight: 700,
+              fontSize: 14,
+              cursor: "pointer",
+            }}
+          >
+            Sign in with Email
+          </button>
+        </form>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
+          <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+          <span style={{ fontSize: 12, color: "var(--text-faint)", fontWeight: 600, textTransform: "uppercase" }}>Or</span>
+          <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+        </div>
+
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <form
             action={async () => {
@@ -61,6 +119,7 @@ export default function LoginPage() {
           >
             <button
               type="submit"
+              className="btn-ghost"
               style={{
                 width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
                 padding: "12px 20px", background: "var(--surface-2)", border: "1px solid var(--border)",
@@ -70,26 +129,6 @@ export default function LoginPage() {
             >
               <ChromeIcon />
               Continue with Google
-            </button>
-          </form>
-
-          <form
-            action={async () => {
-              "use server";
-              await signIn("github", { redirectTo: "/portal" });
-            }}
-          >
-            <button
-              type="submit"
-              style={{
-                width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-                padding: "12px 20px", background: "var(--surface-2)", border: "1px solid var(--border)",
-                borderRadius: 11, cursor: "pointer", fontSize: 14, fontWeight: 600, color: "var(--text)",
-                fontFamily: "var(--font-inter, inherit)", transition: "border-color 0.15s",
-              }}
-            >
-              <GithubIcon />
-              Continue with GitHub
             </button>
           </form>
         </div>
