@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { leads } from "@/lib/db/schema";
+import { enforceRateLimit } from "@/lib/rateLimit";
 
 const LeadSchema = z.object({
   name: z.string().min(1).max(100),
@@ -19,6 +20,10 @@ const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrus@trueweb.ng"];
 
 export async function POST(req: Request) {
   try {
+    // 10 lead submissions per IP per 10 minutes — blocks form spam.
+    const limited = enforceRateLimit(req, "leads", 10, 10 * 60 * 1000);
+    if (limited) return limited;
+
     const body = await req.json();
     const data = LeadSchema.safeParse(body);
     if (!data.success) {

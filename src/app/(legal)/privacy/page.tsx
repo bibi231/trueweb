@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "TrueWeb Solutions privacy policy — how we collect, use, and protect your personal data under Nigeria NDPR and GDPR.",
 };
 
-const UPDATED = "9 June 2026";
+const UPDATED = "14 June 2026";
 
 function H2({ children }: { children: React.ReactNode }) {
   return <h2 style={{ fontSize: 20, fontWeight: 700, marginTop: 40, marginBottom: 12, color: "var(--text)" }}>{children}</h2>;
@@ -32,6 +32,8 @@ export default function PrivacyPage() {
         <Li><strong>Account data:</strong> name, email, profile picture from Google or GitHub OAuth (via NextAuth).</Li>
         <Li><strong>Payment data:</strong> transaction reference, email, and plan details — we do <em>not</em> store card numbers. Payments are processed by Squad (GTCO) and are subject to their privacy policy.</Li>
         <Li><strong>Usage data:</strong> page views, click events, and session data collected via Google Analytics 4 and Vercel Analytics. These are pseudonymised; no names are attached.</Li>
+        <Li><strong>Advertising data:</strong> when you accept cookies, our advertising partners (Google AdSense, Adsterra, Monetag) may collect cookie identifiers and approximate location to serve and measure ads. We do not share your name, email, or account data with advertisers.</Li>
+        <Li><strong>Referral data:</strong> if you arrive via an affiliate link, we store the referral code (cookie <code>tw_ref</code>) so the referrer can be credited if you become a customer.</Li>
         <Li><strong>Technical data:</strong> IP address, browser type, and referrer for fraud prevention and rate limiting (not stored beyond 30 days).</Li>
         <Li><strong>Project data:</strong> information you provide in the client portal (messages, uploaded files, project descriptions).</Li>
       </ul>
@@ -59,7 +61,8 @@ export default function PrivacyPage() {
         <Li><strong>Vercel Inc.</strong> — hosting and serverless functions (US; EU-US DPF).</Li>
         <Li><strong>Neon Inc.</strong> — PostgreSQL database (US; SOC 2 Type II).</Li>
         <Li><strong>Squad by GTCO (HabariPay Ltd.)</strong> — payment processing (Nigeria).</Li>
-        <Li><strong>Google LLC</strong> — OAuth sign-in and Google Analytics 4 (US; EU-US DPF).</Li>
+        <Li><strong>Google LLC</strong> — OAuth sign-in, Google Analytics 4, and AdSense advertising (US; EU-US DPF).</Li>
+        <Li><strong>Adsterra &amp; Monetag</strong> — advertising networks that may set cookies after you consent (governed by their own privacy policies).</Li>
         <Li><strong>Resend Inc.</strong> — transactional email (US).</Li>
       </ul>
 

@@ -54,13 +54,19 @@ const makeConfig = async () => {
         },
         async authorize(credentials) {
           if (!credentials?.email || !credentials?.password) return null;
-          const userArr = await db.select().from(users).where(eq(users.email, credentials.email as string));
+          const email = (credentials.email as string).toLowerCase();
+
+          // Throttle password guessing: max 10 attempts per email per 15 min.
+          const { rateLimit } = await import("./rateLimit");
+          if (!rateLimit(`login:${email}`, 10, 15 * 60 * 1000).ok) return null;
+
+          const userArr = await db.select().from(users).where(eq(users.email, email));
           const user = userArr[0];
           if (!user || !user.password) return null;
-          
+
           const isValid = await bcrypt.compare(credentials.password as string, user.password);
           if (!isValid) return null;
-          
+
           return user;
         }
       })

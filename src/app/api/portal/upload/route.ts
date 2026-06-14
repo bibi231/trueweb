@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
+import { enforceRateLimit } from "@/lib/rateLimit";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // 20 uploads per IP per 10 minutes — blocks storage-abuse / cost attacks.
+  const limited = enforceRateLimit(req, "upload", 20, 10 * 60 * 1000);
+  if (limited) return limited;
 
   const token = process.env.BLOB_READ_WRITE_TOKEN;
   if (!token) return NextResponse.json({ error: "File uploads not configured — add Vercel Blob storage to this project and set BLOB_READ_WRITE_TOKEN." }, { status: 503 });

@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import { messages, conversations } from "@/lib/db/schema";
 import { eq, asc, sql } from "drizzle-orm";
 import { isTeam, getOrCreateClientConversation } from "@/lib/messaging";
+import { enforceRateLimit } from "@/lib/rateLimit";
 
 /** A client may only touch their own conversation; team can touch any. */
 async function authorizeConversation(session: { user?: { id?: string } } | null, conversationId: number, team: boolean) {
@@ -53,6 +54,10 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const session = await auth();
   if (!session?.user?.id) return NextResponse.json({ error: "UNAUTHENTICATED" }, { status: 401 });
+
+  // 30 messages per IP per minute — generous for real chat, blocks flooding.
+  const limited = enforceRateLimit(req, "messages", 30, 60 * 1000);
+  if (limited) return limited;
 
   try {
     const body = await req.json();
