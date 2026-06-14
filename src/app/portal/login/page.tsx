@@ -134,7 +134,9 @@ export default function LoginPage() {
         </div>
 
         <p style={{ fontSize: 12, color: "var(--text-faint)", marginTop: 24 }}>
-          New here? Continue with Google to join — or <a href="/start" style={{ color: "var(--teal)", fontWeight: 600 }}>start a project</a>.
+          New here?{" "}
+          <a href="/portal/register" style={{ color: "var(--teal)", fontWeight: 600 }}>Create an account</a>
+          {" "}or <a href="/start" style={{ color: "var(--teal)", fontWeight: 600 }}>start a project</a>.
         </p>
       </div>
     </div>

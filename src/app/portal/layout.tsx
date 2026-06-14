@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { signOut } from "@/lib/auth";
-import { LayoutDashboard, MessageSquare, FolderOpen, Receipt, Gift, LogOut } from "lucide-react";
+import { LayoutDashboard, MessageSquare, FolderOpen, Receipt, Gift, LogOut, Settings } from "lucide-react";
 import Image from "next/image";
 
 const NAV = [
@@ -13,6 +13,7 @@ const NAV = [
   { href: "/portal/messages", icon: MessageSquare, label: "Messages" },
   { href: "/portal/invoices", icon: Receipt, label: "Invoices" },
   { href: "/portal/affiliate", icon: Gift, label: "Affiliate" },
+  { href: "/portal/settings", icon: Settings, label: "Settings" },
 ];
 
 export default async function PortalLayout({ children }: { children: React.ReactNode }) {
