@@ -14,6 +14,22 @@ export async function POST(req: NextRequest) {
   if (!file) return NextResponse.json({ error: "No file provided" }, { status: 400 });
   if (file.size > 10 * 1024 * 1024) return NextResponse.json({ error: "File too large (max 10 MB)" }, { status: 413 });
 
+  // Security: only allow safe document/image types to a PUBLIC blob store.
+  // Block scripts/markup (XSS / malware hosting on our domain).
+  const ALLOWED_MIME = new Set([
+    "image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp",
+    "application/pdf",
+    "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "text/plain", "text/csv",
+    "application/zip", "application/x-zip-compressed",
+  ]);
+  const BLOCKED_EXT = ["html", "htm", "xhtml", "svg", "js", "mjs", "exe", "sh", "bat", "cmd", "com", "msi", "php", "jsp", "phtml", "dll", "scr"];
+  const extLower = (file.name.split(".").pop() ?? "").toLowerCase();
+  if (BLOCKED_EXT.includes(extLower) || (file.type && !ALLOWED_MIME.has(file.type))) {
+    return NextResponse.json({ error: "File type not allowed. Please upload an image, PDF, Word/Excel document, text, CSV, or zip." }, { status: 415 });
+  }
+
   const userId = (session.user as { id?: string }).id ?? "anon";
   const ext = file.name.split(".").pop() ?? "bin";
   const key = `portal/${userId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;

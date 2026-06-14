@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "How TrueWeb Solutions uses cookies and similar technologies on trueweb.com.ng.",
 };
 
-const UPDATED = "9 June 2026";
+const UPDATED = "14 June 2026";
 
 function H2({ children }: { children: React.ReactNode }) {
   return <h2 style={{ fontSize: 20, fontWeight: 700, marginTop: 40, marginBottom: 12 }}>{children}</h2>;
@@ -18,8 +18,11 @@ const COOKIES = [
   { name: "__Secure-next-auth.session-token", type: "Strictly necessary", expiry: "30 days", purpose: "Keeps you logged in to the client portal. Without this cookie the portal cannot function." },
   { name: "tw_theme", type: "Preference", expiry: "1 year", purpose: "Remembers your dark/light mode preference." },
   { name: "tw_cookie_consent", type: "Preference", expiry: "1 year", purpose: "Records whether you have accepted or declined analytics cookies." },
+  { name: "tw_ref", type: "Functional (affiliate)", expiry: "30 days", purpose: "Records a referral code when you arrive via an affiliate link (trueweb.com.ng/?ref=…), so the referrer can be credited if you later pay for a service." },
   { name: "_ga, _ga_*", type: "Analytics (consent required)", expiry: "2 years", purpose: "Google Analytics 4 — measures page views, session duration, and traffic sources in aggregate. Only set after you accept analytics cookies." },
   { name: "va_* (Vercel Analytics)", type: "Analytics (consent required)", expiry: "Session", purpose: "Vercel Web Analytics — counts unique visitors and page views server-side. Privacy-preserving; no cross-site tracking." },
+  { name: "__gads, __gpi, _gcl_*", type: "Advertising (consent required)", expiry: "Up to 13 months", purpose: "Google AdSense — serves and measures ads and limits how often you see the same ad. Only set after you accept cookies." },
+  { name: "Adsterra / Monetag cookies", type: "Advertising (consent required)", expiry: "Varies", purpose: "Adsterra and Monetag ad networks use cookies to deliver and measure advertising. Set by their scripts after consent." },
 ];
 
 export default function CookiesPage() {
@@ -60,14 +63,14 @@ export default function CookiesPage() {
       <H2>Your choices</H2>
       <P>A cookie consent banner is shown on your first visit. You can:</P>
       <ul style={{ paddingLeft: 24, marginBottom: 14 }}>
-        <li style={{ fontSize: 15.5, color: "var(--text-muted)", lineHeight: 1.75, marginBottom: 8 }}><strong>Accept all cookies</strong> — enables analytics to help us improve the site.</li>
+        <li style={{ fontSize: 15.5, color: "var(--text-muted)", lineHeight: 1.75, marginBottom: 8 }}><strong>Accept all cookies</strong> — enables analytics and advertising cookies that help us improve and fund the site.</li>
         <li style={{ fontSize: 15.5, color: "var(--text-muted)", lineHeight: 1.75, marginBottom: 8 }}><strong>Decline analytics</strong> — only strictly necessary and preference cookies are set.</li>
         <li style={{ fontSize: 15.5, color: "var(--text-muted)", lineHeight: 1.75, marginBottom: 8 }}><strong>Change your mind</strong> — clear the <code style={{ fontSize: 12, background: "var(--surface-2)", padding: "2px 6px", borderRadius: 4 }}>tw_cookie_consent</code> key in your browser&apos;s localStorage to see the banner again, or email us.</li>
       </ul>
       <P>Most browsers also let you block or delete cookies in their settings. Note that blocking all cookies will prevent portal login.</P>
 
       <H2>Third-party cookies</H2>
-      <P>We use Google Analytics 4 (Google LLC) and Vercel Analytics (Vercel Inc.). These services may set their own cookies. We do not use any advertising or tracking cookies, and we do not share your data with advertising networks.</P>
+      <P>We use Google Analytics 4 and Vercel Analytics (measurement), Google AdSense, Adsterra and Monetag (advertising), and the SupportAI chat widget loaded from supportai.com.ng (live chat support). These third parties may set their own cookies, governed by their respective privacy policies. Advertising and analytics cookies are only set after you accept cookies via our consent banner; strictly necessary and functional cookies are always active.</P>
 
       <H2>Contact</H2>
       <P>For questions about our use of cookies: <a href="mailto:support@trueweb.com.ng" style={{ color: "var(--teal)" }}>support@trueweb.com.ng</a></P>
