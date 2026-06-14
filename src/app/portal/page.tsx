@@ -48,10 +48,8 @@ export default async function PortalDashboard() {
           { Icon: MessageSquare, label: "Unread messages", value: unread, href: "/portal/messages" },
           { Icon: Receipt, label: "Pending invoices", value: 0, href: "/portal/invoices" },
         ].map((s) => (
-          <Link key={s.label} href={s.href}
+          <Link key={s.label} href={s.href} className="tw-kpi-card"
             style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 14, padding: "18px 20px", textDecoration: "none", transition: "border-color 0.15s" }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--teal)")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--border)")}
           >
             <s.Icon size={18} color="var(--teal)" strokeWidth={1.8} style={{ marginBottom: 12 }} />
             <p style={{ fontSize: 26, fontWeight: 800, fontFamily: "var(--font-syne)", marginBottom: 2 }}>{s.value}</p>
@@ -59,6 +57,7 @@ export default async function PortalDashboard() {
           </Link>
         ))}
       </div>
+      <style>{`.tw-kpi-card:hover { border-color: var(--teal) !important; }`}</style>
 
       {/* Projects */}
       <div style={{ marginBottom: 28 }}>

@@ -6,6 +6,7 @@ import { verifyWebhookSignature } from "@/lib/squad";
 import { db } from "@/lib/db";
 import { leads, invoices, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
+import { recordConversion } from "@/lib/affiliate";
 
 export async function POST(req: Request) {
   const rawBody = await req.text();
@@ -40,6 +41,23 @@ export async function POST(req: Request) {
           .set({ status: "paid", paidAt: new Date() })
           .where(eq(invoices.id, Number(data.metadata.invoiceId)));
       } catch { /* no-op */ }
+    }
+
+    // Affiliate commission: if this payment carried a referral code, credit the
+    // referrer. Idempotent on txRef so webhook retries won't double-pay.
+    const affiliateRef = (data?.metadata?.affiliateRef ?? "") as string;
+    if (affiliateRef) {
+      try {
+        // Squad sends amount in naira; commissions are tracked in kobo.
+        await recordConversion({
+          code: affiliateRef,
+          amountKobo: Math.round(amountNgn * 100),
+          referredEmail: customerEmail || undefined,
+          paymentRef: txRef,
+        });
+      } catch (affErr) {
+        console.error("[webhook] affiliate conversion failed:", affErr);
+      }
     }
 
     // Send payment receipt email

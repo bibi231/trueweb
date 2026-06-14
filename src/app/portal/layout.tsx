@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { signOut } from "@/lib/auth";
-import { LayoutDashboard, MessageSquare, FolderOpen, Receipt, LogOut } from "lucide-react";
+import { LayoutDashboard, MessageSquare, FolderOpen, Receipt, Gift, LogOut } from "lucide-react";
 import Image from "next/image";
 
 const NAV = [
@@ -12,6 +12,7 @@ const NAV = [
   { href: "/portal/projects", icon: FolderOpen, label: "Projects" },
   { href: "/portal/messages", icon: MessageSquare, label: "Messages" },
   { href: "/portal/invoices", icon: Receipt, label: "Invoices" },
+  { href: "/portal/affiliate", icon: Gift, label: "Affiliate" },
 ];
 
 export default async function PortalLayout({ children }: { children: React.ReactNode }) {
@@ -63,20 +64,20 @@ export default async function PortalLayout({ children }: { children: React.React
             <Link
               key={item.href}
               href={item.href}
+              className="tw-side-link"
               style={{
                 display: "flex", alignItems: "center", gap: 10,
                 padding: "10px 12px", borderRadius: 9, marginBottom: 2,
                 fontSize: 13.5, fontWeight: 500, color: "var(--text-muted)",
                 transition: "background 0.15s, color 0.15s",
               }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--surface-2)"; (e.currentTarget as HTMLElement).style.color = "var(--text)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}
             >
               <item.icon size={15} strokeWidth={1.8} />
               {item.label}
             </Link>
           ))}
         </nav>
+        <style>{`.tw-side-link:hover { background: var(--surface-2); color: var(--text); }`}</style>
 
         <div style={{ padding: "0 12px" }}>
           <form

@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
+import Credentials from "next-auth/providers/credentials";
 
 const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrus@trueweb.ng"];
 
@@ -18,19 +19,57 @@ const makeConfig = async () => {
   const { db } = await import("./db");
   const { users } = await import("./db/schema");
   const { eq } = await import("drizzle-orm");
+  const bcrypt = (await import("bcryptjs")).default;
+
+  // Only register an OAuth provider when BOTH its id and secret are present.
+  // Otherwise NextAuth renders a "Sign in with X" button that errors on click
+  // (this was why the GitHub login flow was failing — the secret was unset).
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const providers: any[] = [];
+
+  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    providers.push(
+      Google({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      })
+    );
+  }
+
+  if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
+    providers.push(
+      GitHub({
+        clientId: process.env.GITHUB_ID,
+        clientSecret: process.env.GITHUB_SECRET,
+      })
+    );
+  }
+
+  providers.push(
+    Credentials({
+        name: "credentials",
+        credentials: {
+          email: { label: "Email", type: "email" },
+          password: { label: "Password", type: "password" }
+        },
+        async authorize(credentials) {
+          if (!credentials?.email || !credentials?.password) return null;
+          const userArr = await db.select().from(users).where(eq(users.email, credentials.email as string));
+          const user = userArr[0];
+          if (!user || !user.password) return null;
+          
+          const isValid = await bcrypt.compare(credentials.password as string, user.password);
+          if (!isValid) return null;
+          
+          return user;
+        }
+      })
+  );
 
   return {
     adapter: DrizzleAdapter(db),
-    providers: [
-      Google({
-        clientId: process.env.GOOGLE_CLIENT_ID!,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      }),
-      GitHub({
-        clientId: process.env.GITHUB_ID ?? "",
-        clientSecret: process.env.GITHUB_SECRET ?? "",
-      }),
-    ],
+    session: { strategy: "jwt" as const },
+    providers,
     pages: { signIn: "/portal/login" },
     events: {
       createUser: async ({ user }: { user: { id?: string; email?: string | null; name?: string | null } }) => {
@@ -54,12 +93,19 @@ const makeConfig = async () => {
       },
     },
     callbacks: {
-      session: ({ session, user }: { session: Record<string, unknown>; user: Record<string, unknown> }) => ({
+      jwt: async ({ token, user }: { token: any; user?: any }) => {
+        if (user) {
+          token.id = user.id;
+          token.role = user.role;
+        }
+        return token;
+      },
+      session: ({ session, token }: { session: any; token: any }) => ({
         ...session,
         user: {
-          ...(session.user as Record<string, unknown>),
-          id: user?.id,
-          role: user?.role ?? "client",
+          ...session.user,
+          id: token.id,
+          role: token.role ?? "client",
         },
       }),
     },

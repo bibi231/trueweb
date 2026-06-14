@@ -11,14 +11,14 @@ export const metadata: Metadata = { title: "Admin Dashboard" };
 type LucideIcon = React.ComponentType<{ size?: number; color?: string; strokeWidth?: number; style?: React.CSSProperties }>;
 function KpiCard({ icon: Icon, label, value, sub, href, color = "var(--teal)" }: { icon: LucideIcon; label: string; value: number | string; sub?: string; href: string; color?: string }) {
   return (
-    <Link href={href} style={{ textDecoration: "none", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 14, padding: "20px 22px", display: "block", transition: "border-color 0.15s" }}
-      onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = color)}
-      onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--border)")}
+    <Link href={href} className="tw-kpi-card"
+      style={{ textDecoration: "none", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 14, padding: "20px 22px", display: "block", transition: "border-color 0.15s", ["--kpi-hover"]: color } as React.CSSProperties}
     >
       <Icon size={18} color={color} strokeWidth={1.8} style={{ marginBottom: 12 }} />
       <p style={{ fontSize: 28, fontWeight: 800, fontFamily: "var(--font-syne)", marginBottom: 2, color }}>{value}</p>
       <p style={{ fontSize: 13, fontWeight: 600, color: "var(--text)", marginBottom: 2 }}>{label}</p>
       {sub && <p style={{ fontSize: 11, color: "var(--text-faint)" }}>{sub}</p>}
+      <style>{`.tw-kpi-card:hover { border-color: var(--kpi-hover, var(--teal)) !important; }`}</style>
     </Link>
   );
 }

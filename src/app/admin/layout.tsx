@@ -8,7 +8,7 @@ import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import {
   LayoutDashboard, Users, FolderOpen, MessageSquare, Star,
-  Receipt, Globe, UserCheck, LogOut, ChevronRight,
+  Receipt, Globe, UserCheck, Gift, LogOut, ChevronRight,
 } from "lucide-react";
 
 const OWNER_EMAILS = ["peterjohn2343@gmail.com", "bitrus@trueweb.ng"];
@@ -21,6 +21,7 @@ const NAV = [
   { href: "/admin/messages", icon: MessageSquare, label: "Messages" },
   { href: "/admin/reviews", icon: Star, label: "Reviews" },
   { href: "/admin/invoices", icon: Receipt, label: "Invoices" },
+  { href: "/admin/affiliates", icon: Gift, label: "Affiliates" },
   { href: "/admin/sites", icon: Globe, label: "Sites" },
 ];
 
@@ -51,10 +52,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
         <nav style={{ flex: 1, padding: "0 10px" }}>
           {NAV.map((item) => (
-            <Link key={item.href} href={item.href}
+            <Link key={item.href} href={item.href} className="tw-admin-link"
               style={{ display: "flex", alignItems: "center", gap: 9, padding: "9px 10px", borderRadius: 8, marginBottom: 2, fontSize: 13, fontWeight: 500, color: "var(--text-muted)", textDecoration: "none", transition: "background 0.15s, color 0.15s" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--surface-2)"; (e.currentTarget as HTMLElement).style.color = "var(--text)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}
             >
               <item.icon size={14} strokeWidth={1.8} />
               {item.label}
@@ -62,6 +61,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             </Link>
           ))}
         </nav>
+        <style>{`.tw-admin-link:hover { background: var(--surface-2); color: var(--text); }`}</style>
 
         <div style={{ padding: "10px 10px 0", borderTop: "1px solid var(--border)" }}>
           <Link href="/portal" style={{ display: "flex", alignItems: "center", gap: 9, padding: "9px 10px", fontSize: 13, color: "var(--text-faint)", textDecoration: "none" }}>

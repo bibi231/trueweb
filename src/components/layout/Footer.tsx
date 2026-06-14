@@ -81,7 +81,8 @@ export function Footer() {
               {/* Socials — update hrefs when handles confirmed */}
               {[
                 { label: "X/Twitter", href: "https://twitter.com/truewebhq", icon: "𝕏" },
-                { label: "LinkedIn", href: "https://www.linkedin.com/in/bitrus-joe-kyari-gadzama-076093178/", icon: "in" },
+                { label: "Instagram", href: "https://instagram.com/trueweb.ng", icon: "IG" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/company/trueweb-solutions", icon: "in" },
                 { label: "GitHub", href: "https://github.com/bibi231", icon: "GH" },
               ].map((s) => (
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}

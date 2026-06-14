@@ -53,8 +53,8 @@ export function NavbarClient({ isOwner }: { isOwner: boolean }) {
               </Link>
             )}
             <Link href="/portal" className="tw-portal-link" style={{ fontSize: 13.5, color: "var(--text-muted)", fontWeight: 500, padding: "8px 12px", borderRadius: 8, transition: "color 0.15s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text)")} onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text-muted)")}>Portal</Link>
-            <Link href="/start" className="btn-teal" style={{ fontSize: 13.5, padding: "9px 18px", borderRadius: 10 }}>Start a Project</Link>
-            <button onClick={() => setMobileOpen((o) => !o)} style={{ background: "none", border: "none", color: "var(--text)", cursor: "pointer", padding: 6, display: "none" }} className="tw-hamburger" aria-label="Toggle menu">{mobileOpen ? <X size={22} /> : <Menu size={22} />}</button>
+            <Link href="/start" className="btn-teal tw-nav-cta" style={{ fontSize: 13.5, padding: "9px 18px", borderRadius: 10 }}>Start a Project</Link>
+            <button onClick={() => setMobileOpen((o) => !o)} style={{ background: "none", border: "none", color: "var(--text)", cursor: "pointer", padding: 6, display: "none", flexShrink: 0 }} className="tw-hamburger" aria-label="Toggle menu">{mobileOpen ? <X size={22} /> : <Menu size={22} />}</button>
           </div>
         </nav>
         {mobileOpen && (
@@ -73,7 +73,7 @@ export function NavbarClient({ isOwner }: { isOwner: boolean }) {
         )}
       </header>
       <style>{`
-        @media (max-width: 900px) { .tw-desktop-nav { display: none !important; } .tw-admin-link { display: none !important; } .tw-hamburger { display: block !important; } }
+        @media (max-width: 900px) { .tw-desktop-nav { display: none !important; } .tw-admin-link { display: none !important; } .tw-nav-cta { display: none !important; } .tw-hamburger { display: block !important; } }
         @media (max-width: 768px) { .tw-portal-link { display: none !important; } }
         @media (min-width: 901px) { .tw-mobile-nav { display: none !important; } }
       `}</style>

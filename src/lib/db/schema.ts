@@ -1,4 +1,4 @@
-import { pgTable, text, integer, boolean, timestamp, jsonb, serial } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, boolean, timestamp, jsonb, serial, uuid, varchar, numeric } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -6,6 +6,7 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   emailVerified: timestamp("email_verified"),
   image: text("image"),
+  password: text("password"),
   /* owner | staff | client */
   role: text("role").default("client"),
   createdAt: timestamp("created_at").defaultNow(),
@@ -104,6 +105,34 @@ export const reviews = pgTable("reviews", {
   source: text("source").default("portal"),
   approved: boolean("approved").default(false),
   featured: boolean("featured").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+/* Affiliate / referral program — a user generates a code, shares
+   trueweb.com.ng/?ref=CODE, and earns commissionRate of any payment that
+   originated from a visit carrying their cookie. All money in kobo. */
+export const affiliates = pgTable("affiliates", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  code: varchar("code", { length: 12 }).unique().notNull(),
+  commissionRate: numeric("commission_rate", { precision: 4, scale: 3 }).default("0.04"),
+  totalEarnedKobo: integer("total_earned_kobo").default(0),
+  pendingPayoutKobo: integer("pending_payout_kobo").default(0),
+  paidOutKobo: integer("paid_out_kobo").default(0),
+  payoutRequested: boolean("payout_requested").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const affiliateConversions = pgTable("affiliate_conversions", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  affiliateId: uuid("affiliate_id").references(() => affiliates.id, { onDelete: "cascade" }),
+  referredUserId: text("referred_user_id"),
+  referredEmail: text("referred_email"),
+  paymentRef: text("payment_ref"),
+  amountKobo: integer("amount_kobo").notNull(),
+  commissionKobo: integer("commission_kobo").notNull(),
+  /* pending | paid */
+  status: varchar("status", { length: 20 }).default("pending"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

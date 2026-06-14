@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { z } from "zod";
 import { initiateCheckout, genRef } from "@/lib/squad";
+import { REF_COOKIE } from "@/lib/affiliate";
 
 const Schema = z.object({
   email: z.string().email(),
@@ -26,13 +28,18 @@ export async function POST(req: Request) {
     const ref = genRef("TW");
     const origin = req.headers.get("origin") ?? "https://trueweb.com.ng";
 
+    // Carry the affiliate referral code (set by middleware on first visit)
+    // into Squad metadata so the webhook can credit the referrer on success.
+    const cookieStore = await cookies();
+    const affiliateRef = cookieStore.get(REF_COOKIE)?.value;
+
     const result = await initiateCheckout({
       email,
       amount: total,
       reference: ref,
       callbackUrl: `${origin}/start/success?ref=${ref}`,
       customerName,
-      metadata: { items, projectBrief, source: "trueweb-builder" },
+      metadata: { items, projectBrief, source: "trueweb-builder", affiliateRef },
     });
 
     return NextResponse.json({ checkoutUrl: result?.data?.checkout_url, reference: ref });

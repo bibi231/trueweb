@@ -83,6 +83,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </ThemeProvider>
         <Analytics />
         <CookieBanner />
+        <Script
+          src="https://supportai.com.ng/widget.js"
+          data-bot-id="6a2a7692a81172fc6c6ffaf8"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

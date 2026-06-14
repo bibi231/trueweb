@@ -57,7 +57,7 @@ export default async function BlogPostPage({ params }: Props) {
             datePublished: post.date,
             dateModified: post.date,
             mainEntityOfPage: { "@type": "WebPage", "@id": `https://trueweb.com.ng/blog/${slug}` },
-            image: post.image ?? "https://trueweb.com.ng/og.png",
+            image: post.ogImage ?? "https://trueweb.com.ng/og.png",
             keywords: post.tags.join(", "),
           }),
         }}
