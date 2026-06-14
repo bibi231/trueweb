@@ -53,12 +53,31 @@ export const projects = pgTable("projects", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+/* A messaging thread between one client and the TrueWeb team (owner/staff). */
+export const conversations = pgTable("conversations", {
+  id: serial("id").primaryKey(),
+  clientId: text("client_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  subject: text("subject").default("General"),
+  /* open | closed */
+  status: text("status").default("open"),
+  lastMessageAt: timestamp("last_message_at").defaultNow(),
+  lastMessageText: text("last_message_text"),
+  unreadAdmin: integer("unread_admin").default(0),
+  unreadClient: integer("unread_client").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const messages = pgTable("messages", {
   id: serial("id").primaryKey(),
+  conversationId: integer("conversation_id").references(() => conversations.id, { onDelete: "cascade" }),
   projectId: integer("project_id").references(() => projects.id),
   senderId: text("sender_id").references(() => users.id),
+  /* client | admin */
+  senderRole: text("sender_role").default("client"),
   content: text("content").notNull(),
+  /* text | payment_link | review_request */
   type: text("type").default("text"),
+  meta: jsonb("meta"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

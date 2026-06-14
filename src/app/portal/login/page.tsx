@@ -47,9 +47,9 @@ export default function LoginPage() {
             margin: "0 auto 20px",
           }}
         >T</div>
-        <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 8 }}>Client Portal</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 8 }}>TrueWeb Portal</h1>
         <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 32, lineHeight: 1.6 }}>
-          Sign in to view your project status, messages, and invoices.
+          Sign in to track your project, message our team, view invoices, or manage your affiliate earnings.
         </p>
 
         <form
@@ -134,7 +134,7 @@ export default function LoginPage() {
         </div>
 
         <p style={{ fontSize: 12, color: "var(--text-faint)", marginTop: 24 }}>
-          New client? <a href="/start" style={{ color: "var(--teal)", fontWeight: 600 }}>Start a project first</a>.
+          New here? Continue with Google to join — or <a href="/start" style={{ color: "var(--teal)", fontWeight: 600 }}>start a project</a>.
         </p>
       </div>
     </div>
